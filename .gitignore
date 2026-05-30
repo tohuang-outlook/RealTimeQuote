@@ -1,0 +1,7 @@
+DerivedData/
+.DerivedData/
+*.xcuserstate
+*.xcworkspace/xcuserdata/
+*.xcodeproj/xcuserdata/
+.DS_Store
+Config/local.xcconfig
