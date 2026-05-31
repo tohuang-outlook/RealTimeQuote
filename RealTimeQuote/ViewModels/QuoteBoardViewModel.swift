@@ -14,8 +14,7 @@ final class QuoteBoardViewModel: ObservableObject {
     private var selectionAttempt: UInt64 = 0
 
     static let preview = QuoteBoardViewModel(
-        settingsStore: makePreviewSettingsStore(),
-        quoteEngine: QuoteEngine(streamFactory: { _, _ in PreviewExchangeQuoteStream() })
+        snapshot: QuoteSnapshot.placeholder(for: .btcUSD, exchange: .coinbase)
     )
 
     init(settingsStore: AppSettingsStore, quoteEngine: QuoteEngine) {
@@ -45,6 +44,21 @@ final class QuoteBoardViewModel: ObservableObject {
                 self.lastSelectionError = error.localizedDescription
             }
         }
+    }
+
+    init(snapshot: QuoteSnapshot) {
+        self.quoteEngine = QuoteEngine(initialSnapshot: snapshot, streamFactory: { _, _ in PreviewExchangeQuoteStream() })
+        self.settingsStore = Self.makePreviewSettingsStore()
+        self.selectedExchange = snapshot.exchange
+        self.selectedPair = snapshot.pair
+        self.snapshot = snapshot
+
+        quoteEngine.$snapshot
+            .receive(on: RunLoop.main)
+            .sink { [weak self] snapshot in
+                self?.snapshot = snapshot
+            }
+            .store(in: &cancellables)
     }
 
     func selectExchange(_ exchange: ExchangeID) {

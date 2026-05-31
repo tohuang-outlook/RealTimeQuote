@@ -1,9 +1,9 @@
 import SwiftUI
 
 enum WindowStyler {
-    static let minimumSize = CGSize(width: 500, height: 250)
-    static let idealSize = CGSize(width: 560, height: 280)
-    static let maximumSize = CGSize(width: 640, height: 320)
+    static let minimumSize = CGSize(width: 540, height: 340)
+    static let idealSize = CGSize(width: 620, height: 390)
+    static let maximumSize = CGSize(width: 760, height: 460)
     static let defaultSize = idealSize
 
     static func makeRootView<Content: View>(

@@ -29,6 +29,12 @@
 		A00000000000000000000117 /* CoinbaseQuoteStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000118 /* CoinbaseQuoteStream.swift */; };
 		A00000000000000000000119 /* OKXTickerEnvelope.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000011A /* OKXTickerEnvelope.swift */; };
 		A0000000000000000000011B /* OKXQuoteStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000011C /* OKXQuoteStream.swift */; };
+		A00000000000000000000120 /* ExchangePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000121 /* ExchangePickerView.swift */; };
+		A00000000000000000000122 /* TradingPairPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000123 /* TradingPairPickerView.swift */; };
+		A00000000000000000000124 /* PriceHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000125 /* PriceHeaderView.swift */; };
+		A00000000000000000000126 /* StatsGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000127 /* StatsGridView.swift */; };
+		A00000000000000000000128 /* ConnectionBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000129 /* ConnectionBadgeView.swift */; };
+		A00000000000000000000130 /* QuoteBoardPresentationStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000131 /* QuoteBoardPresentationStateTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +69,12 @@
 		A00000000000000000000118 /* CoinbaseQuoteStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinbaseQuoteStream.swift; sourceTree = "<group>"; };
 		A0000000000000000000011A /* OKXTickerEnvelope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OKXTickerEnvelope.swift; sourceTree = "<group>"; };
 		A0000000000000000000011C /* OKXQuoteStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OKXQuoteStream.swift; sourceTree = "<group>"; };
+		A00000000000000000000121 /* ExchangePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangePickerView.swift; sourceTree = "<group>"; };
+		A00000000000000000000123 /* TradingPairPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradingPairPickerView.swift; sourceTree = "<group>"; };
+		A00000000000000000000125 /* PriceHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceHeaderView.swift; sourceTree = "<group>"; };
+		A00000000000000000000127 /* StatsGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsGridView.swift; sourceTree = "<group>"; };
+		A00000000000000000000129 /* ConnectionBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionBadgeView.swift; sourceTree = "<group>"; };
+		A00000000000000000000131 /* QuoteBoardPresentationStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteBoardPresentationStateTests.swift; sourceTree = "<group>"; };
 		A00000000000000000000022 /* RealTimeQuote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RealTimeQuote.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A00000000000000000000023 /* RealTimeQuoteTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RealTimeQuoteTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A00000000000000000000031 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/MacOSX.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -122,9 +134,22 @@
 		A00000000000000000000066 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				A0000000000000000000012A /* Components */,
 				A00000000000000000000026 /* QuoteBoardView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		A0000000000000000000012A /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				A00000000000000000000129 /* ConnectionBadgeView.swift */,
+				A00000000000000000000121 /* ExchangePickerView.swift */,
+				A00000000000000000000125 /* PriceHeaderView.swift */,
+				A00000000000000000000127 /* StatsGridView.swift */,
+				A00000000000000000000123 /* TradingPairPickerView.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 		A00000000000000000000067 /* RealTimeQuoteTests */ = {
@@ -132,6 +157,7 @@
 			children = (
 				A00000000000000000000112 /* CoinbaseTickerMessageTests.swift */,
 				A00000000000000000000114 /* OKXTickerEnvelopeTests.swift */,
+				A00000000000000000000131 /* QuoteBoardPresentationStateTests.swift */,
 				A00000000000000000000027 /* TradingPairTests.swift */,
 				A00000000000000000000033 /* QuoteEngineTests.swift */,
 			);
@@ -314,18 +340,23 @@
 				A0000000000000000000001B /* AppSettingsStore.swift in Sources */,
 				A00000000000000000000117 /* CoinbaseQuoteStream.swift in Sources */,
 				A00000000000000000000115 /* CoinbaseTickerMessage.swift in Sources */,
+				A00000000000000000000128 /* ConnectionBadgeView.swift in Sources */,
 				A00000000000000000000019 /* ConnectionState.swift in Sources */,
+				A00000000000000000000120 /* ExchangePickerView.swift in Sources */,
 				A00000000000000000000034 /* ExchangeQuoteStreaming.swift in Sources */,
 				A00000000000000000000017 /* ExchangeID.swift in Sources */,
 				A00000000000000000000036 /* ExchangeStreamEvent.swift in Sources */,
 				A0000000000000000000011B /* OKXQuoteStream.swift in Sources */,
 				A00000000000000000000119 /* OKXTickerEnvelope.swift in Sources */,
+				A00000000000000000000124 /* PriceHeaderView.swift in Sources */,
 				A00000000000000000000015 /* QuoteBoardView.swift in Sources */,
 				A0000000000000000000001C /* QuoteBoardViewModel.swift in Sources */,
 				A0000000000000000000001A /* QuoteSnapshot.swift in Sources */,
 				A00000000000000000000038 /* QuoteEngine.swift in Sources */,
 				A00000000000000000000011 /* RealTimeQuoteApp.swift in Sources */,
+				A00000000000000000000126 /* StatsGridView.swift in Sources */,
 				A00000000000000000000018 /* TradingPair.swift in Sources */,
+				A00000000000000000000122 /* TradingPairPickerView.swift in Sources */,
 				A00000000000000000000014 /* WindowStyler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -336,6 +367,7 @@
 			files = (
 				A00000000000000000000111 /* CoinbaseTickerMessageTests.swift in Sources */,
 				A00000000000000000000113 /* OKXTickerEnvelopeTests.swift in Sources */,
+				A00000000000000000000130 /* QuoteBoardPresentationStateTests.swift in Sources */,
 				A00000000000000000000032 /* QuoteEngineTests.swift in Sources */,
 				A00000000000000000000016 /* TradingPairTests.swift in Sources */,
 			);

@@ -231,17 +231,24 @@ final class QuoteEngineTests: XCTestCase {
         XCTAssertNotNil(defaults.data(forKey: "selection"))
     }
 
-    private static func makeSnapshot(exchange: ExchangeID, pair: TradingPair, price: Decimal) -> QuoteSnapshot {
+    private static func makeSnapshot(
+        exchange: ExchangeID,
+        pair: TradingPair,
+        price: Decimal,
+        absoluteChange: Decimal? = nil,
+        percentChange: Decimal? = nil,
+        updatedAt: Date? = nil
+    ) -> QuoteSnapshot {
         QuoteSnapshot(
             exchange: exchange,
             pair: pair,
             lastPrice: price,
-            absoluteChange: nil,
-            percentChange: nil,
+            absoluteChange: absoluteChange,
+            percentChange: percentChange,
             high24h: nil,
             low24h: nil,
             volume24h: nil,
-            updatedAt: nil,
+            updatedAt: updatedAt,
             connectionState: .live
         )
     }
