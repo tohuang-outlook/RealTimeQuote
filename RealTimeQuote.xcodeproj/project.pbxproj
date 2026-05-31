@@ -12,6 +12,13 @@
 		A00000000000000000000015 /* QuoteBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000026 /* QuoteBoardView.swift */; };
 		A00000000000000000000011 /* RealTimeQuoteApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000021 /* RealTimeQuoteApp.swift */; };
 		A00000000000000000000012 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A00000000000000000000031 /* XCTest.framework */; };
+		A00000000000000000000016 /* TradingPairTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000027 /* TradingPairTests.swift */; };
+		A00000000000000000000017 /* ExchangeID.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000028 /* ExchangeID.swift */; };
+		A00000000000000000000018 /* TradingPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000029 /* TradingPair.swift */; };
+		A00000000000000000000019 /* ConnectionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000002A /* ConnectionState.swift */; };
+		A0000000000000000000001A /* QuoteSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000002B /* QuoteSnapshot.swift */; };
+		A0000000000000000000001B /* AppSettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000002C /* AppSettingsStore.swift */; };
+		A0000000000000000000001C /* QuoteBoardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000002D /* QuoteBoardViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +36,13 @@
 		A00000000000000000000024 /* AppDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDependencies.swift; sourceTree = "<group>"; };
 		A00000000000000000000025 /* WindowStyler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowStyler.swift; sourceTree = "<group>"; };
 		A00000000000000000000026 /* QuoteBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteBoardView.swift; sourceTree = "<group>"; };
+		A00000000000000000000027 /* TradingPairTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradingPairTests.swift; sourceTree = "<group>"; };
+		A00000000000000000000028 /* ExchangeID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeID.swift; sourceTree = "<group>"; };
+		A00000000000000000000029 /* TradingPair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradingPair.swift; sourceTree = "<group>"; };
+		A0000000000000000000002A /* ConnectionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionState.swift; sourceTree = "<group>"; };
+		A0000000000000000000002B /* QuoteSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteSnapshot.swift; sourceTree = "<group>"; };
+		A0000000000000000000002C /* AppSettingsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingsStore.swift; sourceTree = "<group>"; };
+		A0000000000000000000002D /* QuoteBoardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteBoardViewModel.swift; sourceTree = "<group>"; };
 		A00000000000000000000022 /* RealTimeQuote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RealTimeQuote.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A00000000000000000000023 /* RealTimeQuoteTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RealTimeQuoteTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A00000000000000000000031 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/MacOSX.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -57,6 +71,7 @@
 			isa = PBXGroup;
 			children = (
 				A00000000000000000000062 /* RealTimeQuote */,
+				A00000000000000000000067 /* RealTimeQuoteTests */,
 				A00000000000000000000063 /* Frameworks */,
 				A00000000000000000000064 /* Products */,
 			);
@@ -66,6 +81,9 @@
 			isa = PBXGroup;
 			children = (
 				A00000000000000000000065 /* App */,
+				A00000000000000000000068 /* Models */,
+				A00000000000000000000069 /* Services */,
+				A0000000000000000000006A /* ViewModels */,
 				A00000000000000000000066 /* Views */,
 				A00000000000000000000021 /* RealTimeQuoteApp.swift */,
 			);
@@ -87,6 +105,41 @@
 				A00000000000000000000026 /* QuoteBoardView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		A00000000000000000000067 /* RealTimeQuoteTests */ = {
+			isa = PBXGroup;
+			children = (
+				A00000000000000000000027 /* TradingPairTests.swift */,
+			);
+			path = RealTimeQuoteTests;
+			sourceTree = "<group>";
+		};
+		A00000000000000000000068 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A00000000000000000000028 /* ExchangeID.swift */,
+				A00000000000000000000029 /* TradingPair.swift */,
+				A0000000000000000000002A /* ConnectionState.swift */,
+				A0000000000000000000002B /* QuoteSnapshot.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		A00000000000000000000069 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				A0000000000000000000002C /* AppSettingsStore.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		A0000000000000000000006A /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				A0000000000000000000002D /* QuoteBoardViewModel.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		A00000000000000000000063 /* Frameworks */ = {
@@ -204,8 +257,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				A00000000000000000000013 /* AppDependencies.swift in Sources */,
+				A0000000000000000000001B /* AppSettingsStore.swift in Sources */,
+				A00000000000000000000019 /* ConnectionState.swift in Sources */,
+				A00000000000000000000017 /* ExchangeID.swift in Sources */,
 				A00000000000000000000015 /* QuoteBoardView.swift in Sources */,
+				A0000000000000000000001C /* QuoteBoardViewModel.swift in Sources */,
+				A0000000000000000000001A /* QuoteSnapshot.swift in Sources */,
 				A00000000000000000000011 /* RealTimeQuoteApp.swift in Sources */,
+				A00000000000000000000018 /* TradingPair.swift in Sources */,
 				A00000000000000000000014 /* WindowStyler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -214,6 +273,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A00000000000000000000016 /* TradingPairTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -239,6 +299,7 @@
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_TESTABILITY = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Real Time Quote";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";

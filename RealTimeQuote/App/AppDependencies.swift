@@ -2,9 +2,15 @@ import Foundation
 
 @MainActor
 final class AppDependencies: ObservableObject {
-    let quoteBoardTitle = "Real Time Quote"
+    let quoteBoardViewModel: QuoteBoardViewModel
+
+    init(quoteBoardViewModel: QuoteBoardViewModel) {
+        self.quoteBoardViewModel = quoteBoardViewModel
+    }
 
     static func live() -> AppDependencies {
-        AppDependencies()
+        let settingsStore = UserDefaultsAppSettingsStore()
+        let viewModel = QuoteBoardViewModel(settingsStore: settingsStore)
+        return AppDependencies(quoteBoardViewModel: viewModel)
     }
 }

@@ -7,7 +7,7 @@ struct RealTimeQuoteApp: App {
     var body: some Scene {
         WindowGroup("Real Time Quote") {
             WindowStyler.makeRootView {
-                QuoteBoardView(title: dependencies.quoteBoardTitle)
+                QuoteBoardView(viewModel: dependencies.quoteBoardViewModel)
             }
         }
         .windowResizability(.contentSize)

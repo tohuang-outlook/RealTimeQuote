@@ -1,15 +1,21 @@
 import SwiftUI
 
 struct QuoteBoardView: View {
-    let title: String
+    @ObservedObject var viewModel: QuoteBoardViewModel
 
     var body: some View {
         ZStack {
             Color.black.ignoresSafeArea()
 
-            Text(title)
-                .font(.title2.weight(.semibold))
-                .foregroundStyle(.white)
+            VStack(spacing: 8) {
+                Text(viewModel.snapshot.displaySymbol)
+                    .font(.title2.weight(.semibold))
+                    .foregroundStyle(.white)
+
+                Text(viewModel.selectedExchange.displayName)
+                    .font(.caption.weight(.medium))
+                    .foregroundStyle(.white.opacity(0.7))
+            }
         }
     }
 }
