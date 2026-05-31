@@ -13,6 +13,10 @@
 		A00000000000000000000011 /* RealTimeQuoteApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000021 /* RealTimeQuoteApp.swift */; };
 		A00000000000000000000012 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A00000000000000000000031 /* XCTest.framework */; };
 		A00000000000000000000016 /* TradingPairTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000027 /* TradingPairTests.swift */; };
+		A00000000000000000000032 /* QuoteEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000033 /* QuoteEngineTests.swift */; };
+		A00000000000000000000034 /* ExchangeQuoteStreaming.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000035 /* ExchangeQuoteStreaming.swift */; };
+		A00000000000000000000036 /* ExchangeStreamEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000037 /* ExchangeStreamEvent.swift */; };
+		A00000000000000000000038 /* QuoteEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000039 /* QuoteEngine.swift */; };
 		A00000000000000000000017 /* ExchangeID.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000028 /* ExchangeID.swift */; };
 		A00000000000000000000018 /* TradingPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000029 /* TradingPair.swift */; };
 		A00000000000000000000019 /* ConnectionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000002A /* ConnectionState.swift */; };
@@ -37,6 +41,10 @@
 		A00000000000000000000025 /* WindowStyler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowStyler.swift; sourceTree = "<group>"; };
 		A00000000000000000000026 /* QuoteBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteBoardView.swift; sourceTree = "<group>"; };
 		A00000000000000000000027 /* TradingPairTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradingPairTests.swift; sourceTree = "<group>"; };
+		A00000000000000000000033 /* QuoteEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteEngineTests.swift; sourceTree = "<group>"; };
+		A00000000000000000000035 /* ExchangeQuoteStreaming.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeQuoteStreaming.swift; sourceTree = "<group>"; };
+		A00000000000000000000037 /* ExchangeStreamEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeStreamEvent.swift; sourceTree = "<group>"; };
+		A00000000000000000000039 /* QuoteEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteEngine.swift; sourceTree = "<group>"; };
 		A00000000000000000000028 /* ExchangeID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeID.swift; sourceTree = "<group>"; };
 		A00000000000000000000029 /* TradingPair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradingPair.swift; sourceTree = "<group>"; };
 		A0000000000000000000002A /* ConnectionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionState.swift; sourceTree = "<group>"; };
@@ -111,6 +119,7 @@
 			isa = PBXGroup;
 			children = (
 				A00000000000000000000027 /* TradingPairTests.swift */,
+				A00000000000000000000033 /* QuoteEngineTests.swift */,
 			);
 			path = RealTimeQuoteTests;
 			sourceTree = "<group>";
@@ -130,8 +139,19 @@
 			isa = PBXGroup;
 			children = (
 				A0000000000000000000002C /* AppSettingsStore.swift */,
+				A0000000000000000000006B /* Exchanges */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		A0000000000000000000006B /* Exchanges */ = {
+			isa = PBXGroup;
+			children = (
+				A00000000000000000000035 /* ExchangeQuoteStreaming.swift */,
+				A00000000000000000000037 /* ExchangeStreamEvent.swift */,
+				A00000000000000000000039 /* QuoteEngine.swift */,
+			);
+			path = Exchanges;
 			sourceTree = "<group>";
 		};
 		A0000000000000000000006A /* ViewModels */ = {
@@ -259,10 +279,13 @@
 				A00000000000000000000013 /* AppDependencies.swift in Sources */,
 				A0000000000000000000001B /* AppSettingsStore.swift in Sources */,
 				A00000000000000000000019 /* ConnectionState.swift in Sources */,
+				A00000000000000000000034 /* ExchangeQuoteStreaming.swift in Sources */,
 				A00000000000000000000017 /* ExchangeID.swift in Sources */,
+				A00000000000000000000036 /* ExchangeStreamEvent.swift in Sources */,
 				A00000000000000000000015 /* QuoteBoardView.swift in Sources */,
 				A0000000000000000000001C /* QuoteBoardViewModel.swift in Sources */,
 				A0000000000000000000001A /* QuoteSnapshot.swift in Sources */,
+				A00000000000000000000038 /* QuoteEngine.swift in Sources */,
 				A00000000000000000000011 /* RealTimeQuoteApp.swift in Sources */,
 				A00000000000000000000018 /* TradingPair.swift in Sources */,
 				A00000000000000000000014 /* WindowStyler.swift in Sources */,
@@ -273,6 +296,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A00000000000000000000032 /* QuoteEngineTests.swift in Sources */,
 				A00000000000000000000016 /* TradingPairTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
