@@ -14,17 +14,16 @@ final class AppDependencies: ObservableObject {
         let selectedPair = settingsStore.selectedPair
         let quoteEngine = QuoteEngine(
             initialSnapshot: .placeholder(for: selectedPair, exchange: selectedExchange),
-            streamFactory: { _, _ in LiveExchangeQuoteStream() }
+            streamFactory: { exchange, _ in
+                switch exchange {
+                case .coinbase:
+                    return CoinbaseQuoteStream()
+                case .okx:
+                    return OKXQuoteStream()
+                }
+            }
         )
         let viewModel = QuoteBoardViewModel(settingsStore: settingsStore, quoteEngine: quoteEngine)
         return AppDependencies(quoteBoardViewModel: viewModel)
     }
-}
-
-private final class LiveExchangeQuoteStream: ExchangeQuoteStreaming {
-    let events = AsyncStream<ExchangeStreamEvent> { _ in }
-
-    func start(exchange: ExchangeID, pair: TradingPair) async throws {}
-
-    func stop() {}
 }
