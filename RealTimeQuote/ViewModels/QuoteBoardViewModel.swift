@@ -10,6 +10,8 @@ final class QuoteBoardViewModel: ObservableObject {
 
     private let quoteEngine: QuoteEngine
     private let settingsStore: AppSettingsStore
+    private let startupRetryAttempts: Int
+    private let startupRetryDelayNanoseconds: UInt64
     private var cancellables = Set<AnyCancellable>()
     private var selectionAttempt: UInt64 = 0
 
@@ -17,12 +19,19 @@ final class QuoteBoardViewModel: ObservableObject {
         snapshot: QuoteSnapshot.placeholder(for: .btcUSD, exchange: .coinbase)
     )
 
-    init(settingsStore: AppSettingsStore, quoteEngine: QuoteEngine) {
+    init(
+        settingsStore: AppSettingsStore,
+        quoteEngine: QuoteEngine,
+        startupRetryAttempts: Int = 3,
+        startupRetryDelayNanoseconds: UInt64 = 1_000_000_000
+    ) {
         let selectedExchange = settingsStore.selectedExchange
         let selectedPair = settingsStore.selectedPair
 
         self.quoteEngine = quoteEngine
         self.settingsStore = settingsStore
+        self.startupRetryAttempts = startupRetryAttempts
+        self.startupRetryDelayNanoseconds = startupRetryDelayNanoseconds
         self.selectedExchange = selectedExchange
         self.selectedPair = selectedPair
         self.snapshot = quoteEngine.snapshot
@@ -37,7 +46,7 @@ final class QuoteBoardViewModel: ObservableObject {
         let attempt = selectionAttempt
         Task {
             do {
-                try await quoteEngine.start(exchange: selectedExchange, pair: selectedPair)
+                try await self.startupConnect(exchange: selectedExchange, pair: selectedPair)
             } catch {
                 guard attempt == self.selectionAttempt else { return }
                 guard !(error is CancellationError) else { return }
@@ -49,6 +58,8 @@ final class QuoteBoardViewModel: ObservableObject {
     init(snapshot: QuoteSnapshot) {
         self.quoteEngine = QuoteEngine(initialSnapshot: snapshot, streamFactory: { _, _ in PreviewExchangeQuoteStream() })
         self.settingsStore = Self.makePreviewSettingsStore()
+        self.startupRetryAttempts = 1
+        self.startupRetryDelayNanoseconds = 0
         self.selectedExchange = snapshot.exchange
         self.selectedPair = snapshot.pair
         self.snapshot = snapshot
@@ -116,6 +127,34 @@ final class QuoteBoardViewModel: ObservableObject {
         defaults.removePersistentDomain(forName: "RealTimeQuote.QuoteBoardViewModel.preview")
         return UserDefaultsAppSettingsStore(defaults: defaults)
     }
+
+    private func startupConnect(exchange: ExchangeID, pair: TradingPair) async throws {
+        let attempts = max(1, startupRetryAttempts)
+        var lastError: Error?
+
+        for attempt in 1...attempts {
+            do {
+                try await quoteEngine.start(exchange: exchange, pair: pair)
+                return
+            } catch is CancellationError {
+                throw CancellationError()
+            } catch {
+                lastError = error
+                guard attempt < attempts else { break }
+                if startupRetryDelayNanoseconds > 0 {
+                    try await Task.sleep(nanoseconds: startupRetryDelayNanoseconds)
+                } else {
+                    await Task.yield()
+                }
+            }
+        }
+
+        throw lastError ?? StartupConnectError.unknown
+    }
+}
+
+private enum StartupConnectError: LocalizedError {
+    case unknown
 }
 
 private final class PreviewExchangeQuoteStream: ExchangeQuoteStreaming {

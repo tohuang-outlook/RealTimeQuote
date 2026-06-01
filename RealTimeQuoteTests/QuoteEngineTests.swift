@@ -246,6 +246,32 @@ final class QuoteEngineTests: XCTestCase {
         XCTAssertEqual(settingsStore.selectedExchange, .okx)
     }
 
+    func testViewModelRetriesInitialStartBeforeSurfacingError() async throws {
+        let settingsStore = InMemoryAppSettingsStore()
+        let failing = MockExchangeQuoteStream(startError: MockStreamError.startFailed)
+        let succeeding = MockExchangeQuoteStream()
+        let streams = [failing, succeeding]
+        var factoryCalls = 0
+        let engine = QuoteEngine(streamFactory: { _, _ in
+            defer { factoryCalls += 1 }
+            return streams[factoryCalls]
+        })
+
+        let viewModel = QuoteBoardViewModel(
+            settingsStore: settingsStore,
+            quoteEngine: engine,
+            startupRetryAttempts: 2,
+            startupRetryDelayNanoseconds: 0
+        )
+
+        await waitUntil { failing.startCalls.count == 1 }
+        await waitUntil { succeeding.startCalls.count == 1 }
+
+        XCTAssertEqual(viewModel.selectedExchange, .coinbase)
+        XCTAssertEqual(viewModel.selectedPair, .btcUSD)
+        XCTAssertNil(viewModel.lastSelectionError)
+    }
+
     func testSettingsStorePersistsSelectionTupleWithoutLegacySplitKeys() {
         let suiteName = "RealTimeQuoteTests.QuoteEngineTests.\(UUID().uuidString)"
         let defaults = UserDefaults(suiteName: suiteName)!
