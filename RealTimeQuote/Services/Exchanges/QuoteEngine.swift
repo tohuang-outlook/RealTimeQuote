@@ -32,6 +32,14 @@ final class QuoteEngine: ObservableObject {
         try await replaceStream(exchange: exchange, pair: pair)
     }
 
+    func stop() {
+        streamGeneration &+= 1
+        eventTask?.cancel()
+        eventTask = nil
+        currentStream?.stop()
+        currentStream = nil
+    }
+
     private func replaceStream(exchange: ExchangeID, pair: TradingPair) async throws {
         let previousStream = currentStream
         let previousTask = eventTask
@@ -111,7 +119,7 @@ final class QuoteEngine: ObservableObject {
                 low24h: snapshot.low24h,
                 volume24h: snapshot.volume24h,
                 updatedAt: snapshot.updatedAt,
-                connectionState: .disconnected(issue ?? .unknown)
+                connectionState: issue == nil ? .disconnected(.unknown) : .reconnecting
             )
         }
     }

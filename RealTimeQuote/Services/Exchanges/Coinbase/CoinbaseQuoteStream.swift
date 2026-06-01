@@ -7,8 +7,9 @@ final class CoinbaseQuoteStream: ExchangeQuoteStreaming {
     private let decoder: JSONDecoder
     private var continuation: AsyncStream<ExchangeStreamEvent>.Continuation?
     private var webSocketTask: URLSessionWebSocketTask?
-    private var receiveTask: Task<Void, Never>?
-    private var activePair: TradingPair?
+    private var lifecycleTask: Task<Void, Never>?
+    private var activeSubscription: Subscription?
+    private var isStopped = false
 
     init(session: URLSession = .shared) {
         self.session = session
@@ -38,55 +39,127 @@ final class CoinbaseQuoteStream: ExchangeQuoteStreaming {
 
     func start(exchange: ExchangeID, pair: TradingPair) async throws {
         stop()
-        activePair = pair
+        isStopped = false
 
-        let task = session.webSocketTask(with: URL(string: "wss://advanced-trade-ws.coinbase.com")!)
+        let subscription = Subscription(exchange: exchange, pair: pair)
+        activeSubscription = subscription
+
+        let task = try await connect(for: subscription)
+        guard activeSubscription == subscription, !isStopped else {
+            task.cancel(with: .goingAway, reason: nil)
+            throw CancellationError()
+        }
+
         webSocketTask = task
+        lifecycleTask = Task { [weak self] in
+            await self?.runLifecycle(startingWith: task, subscription: subscription)
+        }
+    }
+
+    func stop() {
+        isStopped = true
+        activeSubscription = nil
+        lifecycleTask?.cancel()
+        lifecycleTask = nil
+        cancelCurrentSocket()
+    }
+
+    private func runLifecycle(
+        startingWith task: URLSessionWebSocketTask,
+        subscription: Subscription
+    ) async {
+        var currentTask = task
+        var reconnectAttempt = 0
+
+        while !Task.isCancelled, activeSubscription == subscription, !isStopped {
+            do {
+                let message = try await currentTask.receive()
+                guard let snapshot = try decodeSnapshot(
+                    from: message,
+                    pair: subscription.pair,
+                    exchange: subscription.exchange
+                ) else {
+                    continue
+                }
+                reconnectAttempt = 0
+                continuation?.yield(.didReceiveSnapshot(snapshot))
+            } catch is CancellationError {
+                return
+            } catch {
+                guard activeSubscription == subscription, !isStopped else {
+                    return
+                }
+
+                continuation?.yield(.didDisconnect(Self.connectionIssue(for: error, task: currentTask)))
+                currentTask.cancel(with: .goingAway, reason: nil)
+
+                do {
+                    currentTask = try await reconnectUntilSuccess(
+                        startingAt: reconnectAttempt + 1,
+                        for: subscription
+                    )
+                    guard activeSubscription == subscription, !isStopped else {
+                        currentTask.cancel(with: .goingAway, reason: nil)
+                        return
+                    }
+                    webSocketTask = currentTask
+                    reconnectAttempt = 0
+                } catch is CancellationError {
+                    return
+                } catch {
+                    return
+                }
+            }
+        }
+    }
+
+    private func reconnectUntilSuccess(
+        startingAt attempt: Int,
+        for subscription: Subscription
+    ) async throws -> URLSessionWebSocketTask {
+        var attempt = attempt
+
+        while !Task.isCancelled, activeSubscription == subscription, !isStopped {
+            do {
+                return try await reconnect(after: attempt, for: subscription)
+            } catch is CancellationError {
+                throw CancellationError()
+            } catch {
+                if activeSubscription == subscription, !isStopped {
+                    continuation?.yield(.didDisconnect(Self.connectionIssue(for: error, task: nil)))
+                }
+                attempt += 1
+            }
+        }
+
+        throw CancellationError()
+    }
+
+    private func reconnect(after attempt: Int, for subscription: Subscription) async throws -> URLSessionWebSocketTask {
+        let cappedAttempt = min(attempt, 3)
+        let delaySeconds = UInt64(1 << max(0, cappedAttempt - 1))
+        try await Task.sleep(nanoseconds: delaySeconds * 1_000_000_000)
+        try Task.checkCancellation()
+        return try await connect(for: subscription)
+    }
+
+    private func connect(for subscription: Subscription) async throws -> URLSessionWebSocketTask {
+        let task = session.webSocketTask(with: URL(string: "wss://advanced-trade-ws.coinbase.com")!)
         task.resume()
 
         do {
             try await task.send(
                 .string(
                     """
-                    {"type":"subscribe","channel":"ticker","product_ids":["\(pair.coinbaseProductID)"]}
+                    {"type":"subscribe","channel":"ticker","product_ids":["\(subscription.pair.coinbaseProductID)"]}
                     """
                 )
             )
-
-            receiveTask = Task { [weak self] in
-                await self?.receiveLoop(exchange: exchange, pair: pair, task: task)
-            }
+            continuation?.yield(.didConnect)
+            return task
         } catch {
-            cleanupAfterStartFailure(task: task)
+            task.cancel(with: .goingAway, reason: nil)
             throw error
-        }
-    }
-
-    func stop() {
-        receiveTask?.cancel()
-        receiveTask = nil
-        activePair = nil
-
-        if let webSocketTask {
-            webSocketTask.cancel(with: .goingAway, reason: nil)
-            self.webSocketTask = nil
-        }
-    }
-
-    private func receiveLoop(exchange: ExchangeID, pair: TradingPair, task: URLSessionWebSocketTask) async {
-        while !Task.isCancelled {
-            do {
-                let message = try await task.receive()
-                guard let snapshot = try decodeSnapshot(from: message, pair: pair, exchange: exchange) else {
-                    continue
-                }
-                continuation?.yield(.didReceiveSnapshot(snapshot))
-            } catch is CancellationError {
-                return
-            } catch {
-                continuation?.yield(.didDisconnect(Self.connectionIssue(for: error)))
-                return
-            }
         }
     }
 
@@ -109,21 +182,24 @@ final class CoinbaseQuoteStream: ExchangeQuoteStreaming {
         return tickerMessage.quoteSnapshot(for: pair, exchange: exchange, connectionState: .live)
     }
 
-    private static func connectionIssue(for error: Error) -> ConnectionIssue {
+    private static func connectionIssue(for error: Error, task: URLSessionWebSocketTask?) -> ConnectionIssue {
         let nsError = error as NSError
         if nsError.domain == NSURLErrorDomain {
             return .networkFailure
         }
+        if let task, task.closeCode != .invalid {
+            return .remoteClosed
+        }
         return .unknown
     }
 
-    private func cleanupAfterStartFailure(task: URLSessionWebSocketTask) {
-        if webSocketTask === task {
-            webSocketTask = nil
-        }
-        receiveTask?.cancel()
-        receiveTask = nil
-        activePair = nil
-        task.cancel(with: .goingAway, reason: nil)
+    private func cancelCurrentSocket() {
+        webSocketTask?.cancel(with: .goingAway, reason: nil)
+        webSocketTask = nil
+    }
+
+    private struct Subscription: Equatable {
+        let exchange: ExchangeID
+        let pair: TradingPair
     }
 }

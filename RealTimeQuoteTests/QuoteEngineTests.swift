@@ -100,6 +100,41 @@ final class QuoteEngineTests: XCTestCase {
         XCTAssertEqual(engine.snapshot, Self.makeSnapshot(exchange: .coinbase, pair: .btcUSD, price: 505))
     }
 
+    func testDisconnectMarksSnapshotAsReconnectingUntilNewDataArrives() async throws {
+        let stream = MockExchangeQuoteStream()
+        let engine = QuoteEngine(streamFactory: { _, _ in stream })
+
+        try await engine.start(exchange: .coinbase, pair: .btcUSD)
+        stream.emit(.didReceiveSnapshot(Self.makeSnapshot(exchange: .coinbase, pair: .btcUSD, price: 111)))
+        await waitUntil { engine.snapshot.lastPrice == 111 }
+
+        stream.emit(.didDisconnect(.networkFailure))
+        await waitUntil { engine.snapshot.connectionState == .reconnecting }
+
+        XCTAssertEqual(engine.snapshot.exchange, .coinbase)
+        XCTAssertEqual(engine.snapshot.pair, .btcUSD)
+        XCTAssertEqual(engine.snapshot.lastPrice, 111)
+        XCTAssertEqual(engine.snapshot.connectionState, .reconnecting)
+    }
+
+    func testReconnectConnectEventRestoresLiveStateWithoutDroppingLastQuote() async throws {
+        let stream = MockExchangeQuoteStream()
+        let engine = QuoteEngine(streamFactory: { _, _ in stream })
+
+        try await engine.start(exchange: .coinbase, pair: .btcUSD)
+        stream.emit(.didReceiveSnapshot(Self.makeSnapshot(exchange: .coinbase, pair: .btcUSD, price: 222)))
+        await waitUntil { engine.snapshot.lastPrice == 222 }
+
+        stream.emit(.didDisconnect(.remoteClosed))
+        await waitUntil { engine.snapshot.connectionState == .reconnecting }
+
+        stream.emit(.didConnect)
+        await waitUntil { engine.snapshot.connectionState == .live }
+
+        XCTAssertEqual(engine.snapshot.lastPrice, 222)
+        XCTAssertEqual(engine.snapshot.connectionState, .live)
+    }
+
     func testViewModelRollsBackSelectionAndDoesNotPersistWhenEngineSwitchFails() async throws {
         let settingsStore = InMemoryAppSettingsStore()
         let first = MockExchangeQuoteStream()
