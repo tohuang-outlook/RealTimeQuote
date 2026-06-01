@@ -35,7 +35,7 @@ struct PriceHeaderView: View {
 
             Text(content.priceText)
                 .font(.system(size: 42, weight: .heavy, design: .rounded))
-                .foregroundStyle(.white)
+                .foregroundStyle(trendColor)
                 .lineLimit(1)
                 .minimumScaleFactor(0.8)
 
