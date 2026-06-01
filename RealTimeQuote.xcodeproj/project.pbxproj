@@ -39,6 +39,7 @@
 		A00000000000000000000142 /* RuntimeConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000143 /* RuntimeConfig.swift */; };
 		A00000000000000000000144 /* RuntimeConfigSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000145 /* RuntimeConfigSource.swift */; };
 		A00000000000000000000147 /* RuntimeConfigLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000148 /* RuntimeConfigLoader.swift */; };
+		A00000000000000000000149 /* AppDependenciesConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000014A /* AppDependenciesConfigTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +84,7 @@
 		A00000000000000000000143 /* RuntimeConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntimeConfig.swift; sourceTree = "<group>"; };
 		A00000000000000000000145 /* RuntimeConfigSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntimeConfigSource.swift; sourceTree = "<group>"; };
 		A00000000000000000000148 /* RuntimeConfigLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntimeConfigLoader.swift; sourceTree = "<group>"; };
+		A0000000000000000000014A /* AppDependenciesConfigTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDependenciesConfigTests.swift; sourceTree = "<group>"; };
 		A00000000000000000000022 /* RealTimeQuote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RealTimeQuote.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A00000000000000000000023 /* RealTimeQuoteTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RealTimeQuoteTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A00000000000000000000031 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/MacOSX.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -176,6 +178,7 @@
 			children = (
 				A00000000000000000000112 /* CoinbaseTickerMessageTests.swift */,
 				A00000000000000000000114 /* OKXTickerEnvelopeTests.swift */,
+				A0000000000000000000014A /* AppDependenciesConfigTests.swift */,
 				A00000000000000000000131 /* QuoteBoardPresentationStateTests.swift */,
 				A00000000000000000000141 /* RuntimeConfigLoaderTests.swift */,
 				A00000000000000000000027 /* TradingPairTests.swift */,
@@ -390,6 +393,7 @@
 			files = (
 				A00000000000000000000111 /* CoinbaseTickerMessageTests.swift in Sources */,
 				A00000000000000000000113 /* OKXTickerEnvelopeTests.swift in Sources */,
+				A00000000000000000000149 /* AppDependenciesConfigTests.swift in Sources */,
 				A00000000000000000000130 /* QuoteBoardPresentationStateTests.swift in Sources */,
 				A00000000000000000000140 /* RuntimeConfigLoaderTests.swift in Sources */,
 				A00000000000000000000032 /* QuoteEngineTests.swift in Sources */,

@@ -363,12 +363,20 @@ private struct StartCall: Equatable {
 }
 
 private final class InMemoryAppSettingsStore: AppSettingsStore {
-    var selectedExchange: ExchangeID = .coinbase
-    var selectedPair: TradingPair = .btcUSD
+    var storedSelection: AppSelection?
+
+    var selectedExchange: ExchangeID {
+        get { storedSelection?.exchange ?? .coinbase }
+        set { storedSelection = AppSelection(exchange: newValue, pair: selectedPair) }
+    }
+
+    var selectedPair: TradingPair {
+        get { storedSelection?.pair ?? .btcUSD }
+        set { storedSelection = AppSelection(exchange: selectedExchange, pair: newValue) }
+    }
 
     func setSelection(exchange: ExchangeID, pair: TradingPair) {
-        selectedExchange = exchange
-        selectedPair = pair
+        storedSelection = AppSelection(exchange: exchange, pair: pair)
     }
 }
 
