@@ -38,6 +38,7 @@
 		A00000000000000000000140 /* RuntimeConfigLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000141 /* RuntimeConfigLoaderTests.swift */; };
 		A00000000000000000000142 /* RuntimeConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000143 /* RuntimeConfig.swift */; };
 		A00000000000000000000144 /* RuntimeConfigSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000145 /* RuntimeConfigSource.swift */; };
+		A00000000000000000000147 /* RuntimeConfigLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000148 /* RuntimeConfigLoader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +82,7 @@
 		A00000000000000000000141 /* RuntimeConfigLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntimeConfigLoaderTests.swift; sourceTree = "<group>"; };
 		A00000000000000000000143 /* RuntimeConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntimeConfig.swift; sourceTree = "<group>"; };
 		A00000000000000000000145 /* RuntimeConfigSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntimeConfigSource.swift; sourceTree = "<group>"; };
+		A00000000000000000000148 /* RuntimeConfigLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntimeConfigLoader.swift; sourceTree = "<group>"; };
 		A00000000000000000000022 /* RealTimeQuote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RealTimeQuote.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A00000000000000000000023 /* RealTimeQuoteTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RealTimeQuoteTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A00000000000000000000031 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/MacOSX.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -162,6 +164,7 @@
 		A00000000000000000000146 /* Config */ = {
 			isa = PBXGroup;
 			children = (
+				A00000000000000000000148 /* RuntimeConfigLoader.swift */,
 				A00000000000000000000143 /* RuntimeConfig.swift */,
 				A00000000000000000000145 /* RuntimeConfigSource.swift */,
 			);
@@ -371,6 +374,7 @@
 				A0000000000000000000001A /* QuoteSnapshot.swift in Sources */,
 				A00000000000000000000038 /* QuoteEngine.swift in Sources */,
 				A00000000000000000000011 /* RealTimeQuoteApp.swift in Sources */,
+				A00000000000000000000147 /* RuntimeConfigLoader.swift in Sources */,
 				A00000000000000000000142 /* RuntimeConfig.swift in Sources */,
 				A00000000000000000000144 /* RuntimeConfigSource.swift in Sources */,
 				A00000000000000000000126 /* StatsGridView.swift in Sources */,
