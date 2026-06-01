@@ -3,6 +3,8 @@ import Foundation
 final class OKXQuoteStream: ExchangeQuoteStreaming {
     let events: AsyncStream<ExchangeStreamEvent>
 
+    let config: RuntimeConfig.OKX?
+
     private let session: URLSession
     private let decoder = JSONDecoder()
     private var continuation: AsyncStream<ExchangeStreamEvent>.Continuation?
@@ -11,7 +13,11 @@ final class OKXQuoteStream: ExchangeQuoteStreaming {
     private var activeSubscription: Subscription?
     private var isStopped = false
 
-    init(session: URLSession = .shared) {
+    init(
+        config: RuntimeConfig.OKX? = nil,
+        session: URLSession = .shared
+    ) {
+        self.config = config
         self.session = session
         decoder.dateDecodingStrategy = .custom { decoder in
             let container = try decoder.singleValueContainer()

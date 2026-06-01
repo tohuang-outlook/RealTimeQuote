@@ -120,4 +120,18 @@ final class RuntimeConfigLoaderTests: XCTestCase {
         XCTAssertNil(result.config)
         XCTAssertNotNil(result.error)
     }
+
+    func test_sampleConfig_decodesWithPlaceholderValues() throws {
+        let sampleURL = URL(fileURLWithPath: #filePath, isDirectory: false)
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+            .appendingPathComponent("Config/local.sample.json")
+        let data = try Data(contentsOf: sampleURL)
+
+        let config = try JSONDecoder().decode(RuntimeConfig.self, from: data)
+
+        XCTAssertEqual(config.defaults?.exchange, .coinbase)
+        XCTAssertEqual(config.defaults?.pair, .btcUSD)
+        XCTAssertEqual(config.defaults?.enabledExchanges, [.coinbase, .okx])
+    }
 }

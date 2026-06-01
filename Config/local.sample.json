@@ -1,0 +1,19 @@
+{
+  "defaults": {
+    "exchange": "coinbase",
+    "pair": "btc_usd",
+    "enabledExchanges": ["coinbase", "okx"]
+  },
+  "coinbase": {
+    "apiKey": "your-coinbase-key",
+    "apiSecret": "your-coinbase-secret",
+    "passphrase": "your-coinbase-passphrase",
+    "useAuthenticatedFeed": false
+  },
+  "okx": {
+    "apiKey": "your-okx-key",
+    "apiSecret": "your-okx-secret",
+    "passphrase": "your-okx-passphrase",
+    "useAuthenticatedFeed": false
+  }
+}

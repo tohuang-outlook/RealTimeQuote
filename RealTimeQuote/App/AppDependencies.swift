@@ -53,9 +53,9 @@ final class AppDependencies: ObservableObject {
             streamFactory: { exchange, _ in
                 switch exchange {
                 case .coinbase:
-                    return CoinbaseQuoteStream()
+                    return CoinbaseQuoteStream(config: bootstrapConfig?.coinbase)
                 case .okx:
-                    return OKXQuoteStream()
+                    return OKXQuoteStream(config: bootstrapConfig?.okx)
                 }
             }
         )
