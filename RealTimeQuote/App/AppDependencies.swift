@@ -35,31 +35,46 @@ enum AppBootstrapSelectionResolver {
 
 @MainActor
 final class AppDependencies: ObservableObject {
-    let quoteBoardViewModel: QuoteBoardViewModel
+    private let settingsStore: AppSettingsStore
+    private let config: RuntimeConfig?
 
-    init(quoteBoardViewModel: QuoteBoardViewModel) {
-        self.quoteBoardViewModel = quoteBoardViewModel
+    init(settingsStore: AppSettingsStore, config: RuntimeConfig?) {
+        self.settingsStore = settingsStore
+        self.config = config
+    }
+
+    func makeQuoteBoardViewModel() -> QuoteBoardViewModel {
+        let selection = AppBootstrapSelectionResolver.resolve(
+            settingsStore: settingsStore,
+            config: config
+        )
+        let currentSelection = settingsStore.storedSelection
+
+        if currentSelection?.exchange != selection.exchange || currentSelection?.pair != selection.pair {
+            settingsStore.setSelection(exchange: selection.exchange, pair: selection.pair)
+        }
+
+        let quoteEngine = QuoteEngine(
+            initialSnapshot: .placeholder(for: selection.pair, exchange: selection.exchange),
+            streamFactory: { [config] exchange, _ in
+                switch exchange {
+                case .coinbase:
+                    return CoinbaseQuoteStream(config: config?.coinbase)
+                case .okx:
+                    return OKXQuoteStream(config: config?.okx)
+                }
+            }
+        )
+
+        return QuoteBoardViewModel(
+            settingsStore: settingsStore,
+            quoteEngine: quoteEngine
+        )
     }
 
     static func live() -> AppDependencies {
         let settingsStore = UserDefaultsAppSettingsStore()
-        let bootstrapConfig = try? RuntimeConfigLoader().load().config
-        let selection = AppBootstrapSelectionResolver.resolve(
-            settingsStore: settingsStore,
-            config: bootstrapConfig
-        )
-        let quoteEngine = QuoteEngine(
-            initialSnapshot: .placeholder(for: selection.pair, exchange: selection.exchange),
-            streamFactory: { exchange, _ in
-                switch exchange {
-                case .coinbase:
-                    return CoinbaseQuoteStream(config: bootstrapConfig?.coinbase)
-                case .okx:
-                    return OKXQuoteStream(config: bootstrapConfig?.okx)
-                }
-            }
-        )
-        let viewModel = QuoteBoardViewModel(settingsStore: settingsStore, quoteEngine: quoteEngine)
-        return AppDependencies(quoteBoardViewModel: viewModel)
+        let config = try? RuntimeConfigLoader().load().config
+        return AppDependencies(settingsStore: settingsStore, config: config)
     }
 }

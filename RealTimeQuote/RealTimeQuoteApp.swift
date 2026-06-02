@@ -6,11 +6,23 @@ struct RealTimeQuoteApp: App {
 
     var body: some Scene {
         WindowGroup("Real Time Quote") {
-            WindowStyler.makeRootView {
-                QuoteBoardView(viewModel: dependencies.quoteBoardViewModel)
-            }
+            QuoteBoardWindowRootView(makeViewModel: dependencies.makeQuoteBoardViewModel)
         }
         .windowResizability(.contentSize)
         .defaultSize(width: WindowStyler.defaultSize.width, height: WindowStyler.defaultSize.height)
+    }
+}
+
+private struct QuoteBoardWindowRootView: View {
+    @StateObject private var viewModel: QuoteBoardViewModel
+
+    init(makeViewModel: @escaping @MainActor () -> QuoteBoardViewModel) {
+        _viewModel = StateObject(wrappedValue: makeViewModel())
+    }
+
+    var body: some View {
+        WindowStyler.makeRootView {
+            QuoteBoardView(viewModel: viewModel)
+        }
     }
 }
