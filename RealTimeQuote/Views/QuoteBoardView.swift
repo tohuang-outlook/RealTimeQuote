@@ -34,6 +34,22 @@ enum QuoteBoardTheme {
     static let sectionSpacing: CGFloat = 22
     static let controlSpacing: CGFloat = 14
     static let compactSpacing: CGFloat = 8
+
+    static func regularFont(size: CGFloat) -> Font {
+        .custom("Helvetica Neue", size: size)
+    }
+
+    static func semiboldFont(size: CGFloat) -> Font {
+        .custom("Helvetica Neue", size: size)
+    }
+
+    static func boldFont(size: CGFloat) -> Font {
+        .custom("Helvetica Neue Bold", size: size)
+    }
+
+    static func heavyFont(size: CGFloat) -> Font {
+        .custom("Helvetica Neue Heavy", size: size)
+    }
 }
 
 struct QuoteBoardPresentationState: Equatable {
@@ -134,6 +150,34 @@ struct QuoteBoardPresentationState: Equatable {
     }()
 }
 
+private struct QuoteBoardLayoutMetrics {
+    let outerPadding: CGFloat
+    let contentHorizontalPadding: CGFloat
+    let contentVerticalPadding: CGFloat
+    let sectionSpacing: CGFloat
+    let controlSpacing: CGFloat
+    let statsSpacing: CGFloat
+    let heroPriceFontSize: CGFloat
+
+    static func make(for size: CGSize) -> QuoteBoardLayoutMetrics {
+        let width = max(size.width, WindowStyler.minimumSize.width)
+        let height = max(size.height, WindowStyler.minimumSize.height)
+        let widthProgress = min(max((width - WindowStyler.minimumSize.width) / 280, 0), 1)
+        let heightProgress = min(max((height - WindowStyler.minimumSize.height) / 180, 0), 1)
+        let progress = max(widthProgress, heightProgress)
+
+        return QuoteBoardLayoutMetrics(
+            outerPadding: 18 + (10 * progress),
+            contentHorizontalPadding: 28 + (14 * progress),
+            contentVerticalPadding: 24 + (12 * progress),
+            sectionSpacing: 22 + (10 * progress),
+            controlSpacing: 14 + (8 * progress),
+            statsSpacing: 14 + (10 * progress),
+            heroPriceFontSize: 42 + (22 * progress)
+        )
+    }
+}
+
 struct QuoteBoardView: View {
     @ObservedObject var viewModel: QuoteBoardViewModel
 
@@ -143,40 +187,59 @@ struct QuoteBoardView: View {
             lastSelectionError: viewModel.lastSelectionError
         )
 
-        ZStack {
-            QuoteBoardTheme.backgroundGradient
-                .ignoresSafeArea()
+        VStack(spacing: 0) {
+            Rectangle()
+                .fill(Color.black)
+                .frame(height: WindowStyler.widgetTopBarHeight)
 
-            RoundedRectangle(cornerRadius: QuoteBoardTheme.cardCornerRadius, style: .continuous)
-                .fill(QuoteBoardTheme.cardFill)
-                .overlay(
+            GeometryReader { geometry in
+                let metrics = QuoteBoardLayoutMetrics.make(for: geometry.size)
+
+                ZStack {
+                    QuoteBoardTheme.backgroundGradient
+                        .ignoresSafeArea()
+
                     RoundedRectangle(cornerRadius: QuoteBoardTheme.cardCornerRadius, style: .continuous)
-                        .stroke(QuoteBoardTheme.cardStroke, lineWidth: 1)
-                )
-                .shadow(color: QuoteBoardTheme.cardShadow, radius: 24, y: 16)
-                .padding(QuoteBoardTheme.outerPadding)
+                        .fill(QuoteBoardTheme.cardFill)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: QuoteBoardTheme.cardCornerRadius, style: .continuous)
+                                .stroke(QuoteBoardTheme.cardStroke, lineWidth: 1)
+                        )
+                        .shadow(color: QuoteBoardTheme.cardShadow, radius: 24, y: 16)
+                        .padding(metrics.outerPadding)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
 
-            VStack(alignment: .leading, spacing: QuoteBoardTheme.sectionSpacing) {
-                HStack(alignment: .top, spacing: QuoteBoardTheme.controlSpacing) {
-                    ExchangePickerView(selection: exchangeSelection)
-                    TradingPairPickerView(selection: pairSelection)
-                    Spacer(minLength: 0)
-                    ConnectionBadgeView(state: presentation.connectionState)
+                    VStack(alignment: .leading, spacing: metrics.sectionSpacing) {
+                        HStack(alignment: .top, spacing: metrics.controlSpacing) {
+                            ExchangePickerView(selection: exchangeSelection)
+                            TradingPairPickerView(selection: pairSelection)
+                            Spacer(minLength: 0)
+                            ConnectionBadgeView(state: presentation.connectionState)
+                        }
+
+                        PriceHeaderView(
+                            content: presentation.header,
+                            heroPriceFontSize: metrics.heroPriceFontSize
+                        )
+
+                        StatsGridView(
+                            items: presentation.stats,
+                            horizontalSpacing: metrics.statsSpacing
+                        )
+
+                        if let lastSelectionError = presentation.lastSelectionError {
+                            Text(lastSelectionError)
+                                .font(QuoteBoardTheme.regularFont(size: 12))
+                                .foregroundStyle(QuoteBoardTheme.errorText)
+                                .lineLimit(2)
+                        }
+                    }
+                    .padding(.horizontal, metrics.contentHorizontalPadding)
+                    .padding(.vertical, metrics.contentVerticalPadding)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
                 }
-
-                PriceHeaderView(content: presentation.header)
-                StatsGridView(items: presentation.stats)
-
-                if let lastSelectionError = presentation.lastSelectionError {
-                    Text(lastSelectionError)
-                        .font(.system(size: 12, weight: .medium, design: .rounded))
-                        .foregroundStyle(QuoteBoardTheme.errorText)
-                        .lineLimit(2)
-                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
-            .padding(.horizontal, QuoteBoardTheme.contentHorizontalPadding)
-            .padding(.vertical, QuoteBoardTheme.contentVerticalPadding)
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         }
     }
 

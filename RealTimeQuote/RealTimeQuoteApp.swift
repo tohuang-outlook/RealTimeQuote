@@ -8,6 +8,7 @@ struct RealTimeQuoteApp: App {
         WindowGroup("Real Time Quote") {
             QuoteBoardWindowRootView(makeViewModel: dependencies.makeQuoteBoardViewModel)
         }
+        .windowStyle(.hiddenTitleBar)
         .windowResizability(.contentSize)
         .defaultSize(width: WindowStyler.defaultSize.width, height: WindowStyler.defaultSize.height)
     }

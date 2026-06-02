@@ -6,7 +6,7 @@ struct ExchangePickerView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: QuoteBoardTheme.compactSpacing) {
             Text("Exchange")
-                .font(.system(size: 11, weight: .semibold, design: .rounded))
+                .font(QuoteBoardTheme.regularFont(size: 11))
                 .foregroundStyle(QuoteBoardTheme.secondaryText)
                 .textCase(.uppercase)
 

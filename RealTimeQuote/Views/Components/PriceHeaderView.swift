@@ -17,16 +17,17 @@ struct PriceHeaderView: View {
     }
 
     let content: Content
+    let heroPriceFontSize: CGFloat
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack(alignment: .firstTextBaseline, spacing: 12) {
                 Text(content.symbol)
-                    .font(.system(size: 18, weight: .bold, design: .rounded))
+                    .font(QuoteBoardTheme.boldFont(size: 18))
                     .foregroundStyle(QuoteBoardTheme.primaryText)
 
                 Text(content.exchangeName)
-                    .font(.system(size: 12, weight: .semibold, design: .rounded))
+                    .font(QuoteBoardTheme.regularFont(size: 12))
                     .foregroundStyle(QuoteBoardTheme.tertiaryText)
                     .padding(.horizontal, 10)
                     .padding(.vertical, 5)
@@ -34,17 +35,17 @@ struct PriceHeaderView: View {
             }
 
             Text(content.priceText)
-                .font(.system(size: 42, weight: .heavy, design: .rounded))
+                .font(QuoteBoardTheme.heavyFont(size: heroPriceFontSize))
                 .foregroundStyle(trendColor)
                 .lineLimit(1)
-                .minimumScaleFactor(0.8)
+                .minimumScaleFactor(0.75)
 
             Text(content.changeText)
-                .font(.system(size: 16, weight: .semibold, design: .rounded))
+                .font(QuoteBoardTheme.regularFont(size: 16))
                 .foregroundStyle(trendColor)
 
             Text(content.updatedAtText)
-                .font(.system(size: 12, weight: .medium, design: .rounded))
+                .font(QuoteBoardTheme.regularFont(size: 12))
                 .foregroundStyle(QuoteBoardTheme.tertiaryText)
         }
     }

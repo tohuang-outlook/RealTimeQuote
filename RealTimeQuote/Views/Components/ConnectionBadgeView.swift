@@ -6,7 +6,7 @@ struct ConnectionBadgeView: View {
     var body: some View {
         Label {
             Text(labelText)
-                .font(.system(size: 12, weight: .semibold, design: .rounded))
+                .font(QuoteBoardTheme.regularFont(size: 12))
         } icon: {
             Circle()
                 .fill(badgeColor)

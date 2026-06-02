@@ -7,14 +7,15 @@ struct StatsGridView: View {
     }
 
     let items: [Item]
+    let horizontalSpacing: CGFloat
 
     var body: some View {
         ViewThatFits(in: .horizontal) {
-            HStack(spacing: QuoteBoardTheme.controlSpacing) {
+            HStack(spacing: horizontalSpacing) {
                 statCards
             }
 
-            VStack(spacing: QuoteBoardTheme.controlSpacing) {
+            VStack(spacing: horizontalSpacing) {
                 statCards
             }
         }
@@ -30,11 +31,11 @@ struct StatsGridView: View {
     private func statCard(item: Item) -> some View {
         VStack(alignment: .leading, spacing: 10) {
             Text(item.label)
-                .font(.system(size: 11, weight: .bold, design: .rounded))
+                .font(QuoteBoardTheme.boldFont(size: 11))
                 .foregroundStyle(QuoteBoardTheme.tertiaryText)
 
             Text(item.value)
-                .font(.system(size: 18, weight: .semibold, design: .rounded))
+                .font(QuoteBoardTheme.regularFont(size: 18))
                 .foregroundStyle(.white)
                 .lineLimit(1)
                 .minimumScaleFactor(0.8)
