@@ -68,9 +68,21 @@ struct QuoteBoardPresentationState: Equatable {
             changeTone: Self.changeTone(snapshot.absoluteChange)
         )
         stats = [
-            StatsGridView.Item(label: "24H HIGH", value: Self.currencyText(snapshot.high24h)),
-            StatsGridView.Item(label: "24H LOW", value: Self.currencyText(snapshot.low24h)),
-            StatsGridView.Item(label: "24H VOL", value: Self.volumeText(snapshot.volume24h))
+            StatsGridView.Item(
+                label: "24H HIGH",
+                value: Self.currencyText(snapshot.high24h),
+                valueColor: QuoteBoardTheme.positive
+            ),
+            StatsGridView.Item(
+                label: "24H LOW",
+                value: Self.currencyText(snapshot.low24h),
+                valueColor: QuoteBoardTheme.negative
+            ),
+            StatsGridView.Item(
+                label: "24H VOL",
+                value: Self.volumeText(snapshot.volume24h),
+                valueColor: .white
+            )
         ]
         self.connectionState = snapshot.connectionState
         self.lastSelectionError = lastSelectionError

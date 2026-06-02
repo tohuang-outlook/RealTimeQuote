@@ -4,6 +4,7 @@ struct StatsGridView: View {
     struct Item: Equatable {
         let label: String
         let value: String
+        let valueColor: Color
     }
 
     let items: [Item]
@@ -36,7 +37,7 @@ struct StatsGridView: View {
 
             Text(item.value)
                 .font(QuoteBoardTheme.regularFont(size: 18))
-                .foregroundStyle(.white)
+                .foregroundStyle(item.valueColor)
                 .lineLimit(1)
                 .minimumScaleFactor(0.8)
         }
