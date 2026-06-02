@@ -20,13 +20,14 @@ final class QuoteBoardViewModel: ObservableObject {
     )
 
     init(
+        initialSelection: AppBootstrapSelection,
         settingsStore: AppSettingsStore,
         quoteEngine: QuoteEngine,
         startupRetryAttempts: Int = 3,
         startupRetryDelayNanoseconds: UInt64 = 1_000_000_000
     ) {
-        let selectedExchange = settingsStore.selectedExchange
-        let selectedPair = settingsStore.selectedPair
+        let selectedExchange = initialSelection.exchange
+        let selectedPair = initialSelection.pair
 
         self.quoteEngine = quoteEngine
         self.settingsStore = settingsStore

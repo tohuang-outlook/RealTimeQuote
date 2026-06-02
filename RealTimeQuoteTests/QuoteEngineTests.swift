@@ -146,7 +146,11 @@ final class QuoteEngineTests: XCTestCase {
             return streams[factoryCalls]
         })
 
-        let viewModel = QuoteBoardViewModel(settingsStore: settingsStore, quoteEngine: engine)
+        let viewModel = QuoteBoardViewModel(
+            initialSelection: AppBootstrapSelection(exchange: .coinbase, pair: .btcUSD),
+            settingsStore: settingsStore,
+            quoteEngine: engine
+        )
         await waitUntil { first.startCalls.count == 1 }
 
         viewModel.selectExchange(.okx)
@@ -201,7 +205,11 @@ final class QuoteEngineTests: XCTestCase {
             return streams[factoryCalls]
         })
 
-        let viewModel = QuoteBoardViewModel(settingsStore: settingsStore, quoteEngine: engine)
+        let viewModel = QuoteBoardViewModel(
+            initialSelection: AppBootstrapSelection(exchange: .coinbase, pair: .btcUSD),
+            settingsStore: settingsStore,
+            quoteEngine: engine
+        )
         await waitUntil { initial.startCalls.count == 1 }
 
         viewModel.selectExchange(.okx)
@@ -230,7 +238,11 @@ final class QuoteEngineTests: XCTestCase {
             return streams[factoryCalls]
         })
 
-        let viewModel = QuoteBoardViewModel(settingsStore: settingsStore, quoteEngine: engine)
+        let viewModel = QuoteBoardViewModel(
+            initialSelection: AppBootstrapSelection(exchange: .coinbase, pair: .btcUSD),
+            settingsStore: settingsStore,
+            quoteEngine: engine
+        )
         await waitUntil { initial.startCalls.count == 1 }
 
         viewModel.selectExchange(.okx)
@@ -258,6 +270,7 @@ final class QuoteEngineTests: XCTestCase {
         })
 
         let viewModel = QuoteBoardViewModel(
+            initialSelection: AppBootstrapSelection(exchange: .coinbase, pair: .btcUSD),
             settingsStore: settingsStore,
             quoteEngine: engine,
             startupRetryAttempts: 2,
