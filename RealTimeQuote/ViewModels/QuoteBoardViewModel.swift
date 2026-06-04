@@ -4,11 +4,13 @@ import Foundation
 @MainActor
 final class QuoteBoardViewModel: ObservableObject {
     @Published private(set) var snapshot: QuoteSnapshot
+    @Published private(set) var marketDetails: MarketDetailsSnapshot
     @Published private(set) var selectedExchange: ExchangeID
     @Published private(set) var selectedPair: TradingPair
     @Published private(set) var lastSelectionError: String?
 
     private let quoteEngine: QuoteEngine
+    private let marketDetailsLoader: ExchangeMarketDetailsLoading
     private let settingsStore: AppSettingsStore
     private let startupRetryAttempts: Int
     private let startupRetryDelayNanoseconds: UInt64
@@ -23,6 +25,7 @@ final class QuoteBoardViewModel: ObservableObject {
         initialSelection: AppBootstrapSelection,
         settingsStore: AppSettingsStore,
         quoteEngine: QuoteEngine,
+        marketDetailsLoader: ExchangeMarketDetailsLoading = NoOpExchangeMarketDetailsLoader(),
         startupRetryAttempts: Int = 3,
         startupRetryDelayNanoseconds: UInt64 = 1_000_000_000
     ) {
@@ -30,12 +33,14 @@ final class QuoteBoardViewModel: ObservableObject {
         let selectedPair = initialSelection.pair
 
         self.quoteEngine = quoteEngine
+        self.marketDetailsLoader = marketDetailsLoader
         self.settingsStore = settingsStore
         self.startupRetryAttempts = startupRetryAttempts
         self.startupRetryDelayNanoseconds = startupRetryDelayNanoseconds
         self.selectedExchange = selectedExchange
         self.selectedPair = selectedPair
         self.snapshot = quoteEngine.snapshot
+        self.marketDetails = .empty
 
         quoteEngine.$snapshot
             .receive(on: RunLoop.main)
@@ -58,12 +63,14 @@ final class QuoteBoardViewModel: ObservableObject {
 
     init(snapshot: QuoteSnapshot) {
         self.quoteEngine = QuoteEngine(initialSnapshot: snapshot, streamFactory: { _, _ in PreviewExchangeQuoteStream() })
+        self.marketDetailsLoader = NoOpExchangeMarketDetailsLoader()
         self.settingsStore = Self.makePreviewSettingsStore()
         self.startupRetryAttempts = 1
         self.startupRetryDelayNanoseconds = 0
         self.selectedExchange = snapshot.exchange
         self.selectedPair = snapshot.pair
         self.snapshot = snapshot
+        self.marketDetails = .empty
 
         quoteEngine.$snapshot
             .receive(on: RunLoop.main)
@@ -82,6 +89,7 @@ final class QuoteBoardViewModel: ObservableObject {
         let attempt = selectionAttempt
 
         selectedExchange = exchange
+        marketDetails = .empty
         lastSelectionError = nil
 
         Task {
@@ -107,6 +115,7 @@ final class QuoteBoardViewModel: ObservableObject {
         let attempt = selectionAttempt
 
         selectedPair = pair
+        marketDetails = .empty
         lastSelectionError = nil
 
         Task {

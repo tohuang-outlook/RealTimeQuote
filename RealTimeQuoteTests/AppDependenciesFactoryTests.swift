@@ -85,6 +85,15 @@ final class AppDependenciesFactoryTests: XCTestCase {
         XCTAssertEqual(viewModel.selectedPair, .ethUSD)
     }
 
+    func testViewModelStartsWithEmptyMarketDetails() {
+        let viewModel = makeViewModel(
+            initialSelection: AppBootstrapSelection(exchange: .coinbase, pair: .btcUSD),
+            settingsStore: InMemoryAppSettingsStore(selection: nil)
+        )
+
+        XCTAssertEqual(viewModel.marketDetails, .empty)
+    }
+
     private func makeViewModel(
         initialSelection: AppBootstrapSelection,
         settingsStore: AppSettingsStore

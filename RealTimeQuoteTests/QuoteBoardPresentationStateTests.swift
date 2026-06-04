@@ -24,14 +24,20 @@ final class QuoteBoardPresentationStateTests: XCTestCase {
         XCTAssertEqual(presentation.header.symbol, "BTC-USD")
         XCTAssertEqual(presentation.header.exchangeName, "Coinbase")
         XCTAssertEqual(presentation.header.priceText, "$73,707.82")
-        XCTAssertEqual(presentation.header.changeText, "+$273.09 (+0.37%)")
+        XCTAssertEqual(presentation.header.changeAmountText, "+273.09")
+        XCTAssertEqual(presentation.header.changePercentText, "+0.37%")
         XCTAssertEqual(presentation.header.changeTone, .positive)
         XCTAssertEqual(
             presentation.stats,
             [
-                StatsGridView.Item(label: "24H HIGH", value: "$74,172.05"),
-                StatsGridView.Item(label: "24H LOW", value: "$73,127.08"),
-                StatsGridView.Item(label: "24H VOL", value: "4,040.12")
+                StatsGridView.Item(label: "Open", value: "--", valueColor: .white),
+                StatsGridView.Item(label: "High", value: "$74,172.05", valueColor: QuoteBoardTheme.positive),
+                StatsGridView.Item(label: "Low", value: "$73,127.08", valueColor: QuoteBoardTheme.negative),
+                StatsGridView.Item(label: "Prev Close", value: "--", valueColor: .white),
+                StatsGridView.Item(label: "52 Wk High", value: "--", valueColor: .white),
+                StatsGridView.Item(label: "52 Wk Low", value: "--", valueColor: .white),
+                StatsGridView.Item(label: "24H Volume", value: "4,040.12", valueColor: .white),
+                StatsGridView.Item(label: "Market Cap", value: "--", valueColor: .white)
             ]
         )
         XCTAssertEqual(presentation.connectionState, .live)

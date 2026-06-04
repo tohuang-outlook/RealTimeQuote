@@ -31,6 +31,8 @@
 		A00000000000000000000119 /* OKXTickerEnvelope.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000011A /* OKXTickerEnvelope.swift */; };
 		A0000000000000000000011B /* OKXQuoteStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000011C /* OKXQuoteStream.swift */; };
 		A00000000000000000000120 /* ExchangePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000121 /* ExchangePickerView.swift */; };
+		A00000000000000000000152 /* MarketDetailsSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000153 /* MarketDetailsSnapshot.swift */; };
+		A00000000000000000000154 /* ExchangeMarketDetailsLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000155 /* ExchangeMarketDetailsLoading.swift */; };
 		A00000000000000000000122 /* TradingPairPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000123 /* TradingPairPickerView.swift */; };
 		A00000000000000000000124 /* PriceHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000125 /* PriceHeaderView.swift */; };
 		A00000000000000000000126 /* StatsGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000127 /* StatsGridView.swift */; };
@@ -77,6 +79,8 @@
 		A0000000000000000000011A /* OKXTickerEnvelope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OKXTickerEnvelope.swift; sourceTree = "<group>"; };
 		A0000000000000000000011C /* OKXQuoteStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OKXQuoteStream.swift; sourceTree = "<group>"; };
 		A00000000000000000000121 /* ExchangePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangePickerView.swift; sourceTree = "<group>"; };
+		A00000000000000000000153 /* MarketDetailsSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketDetailsSnapshot.swift; sourceTree = "<group>"; };
+		A00000000000000000000155 /* ExchangeMarketDetailsLoading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeMarketDetailsLoading.swift; sourceTree = "<group>"; };
 		A00000000000000000000123 /* TradingPairPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradingPairPickerView.swift; sourceTree = "<group>"; };
 		A00000000000000000000125 /* PriceHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceHeaderView.swift; sourceTree = "<group>"; };
 		A00000000000000000000127 /* StatsGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsGridView.swift; sourceTree = "<group>"; };
@@ -194,6 +198,7 @@
 			isa = PBXGroup;
 			children = (
 				A00000000000000000000028 /* ExchangeID.swift */,
+				A00000000000000000000153 /* MarketDetailsSnapshot.swift */,
 				A00000000000000000000029 /* TradingPair.swift */,
 				A0000000000000000000002A /* ConnectionState.swift */,
 				A0000000000000000000002B /* QuoteSnapshot.swift */,
@@ -214,6 +219,7 @@
 			isa = PBXGroup;
 			children = (
 				A0000000000000000000011D /* Coinbase */,
+				A00000000000000000000155 /* ExchangeMarketDetailsLoading.swift */,
 				A00000000000000000000035 /* ExchangeQuoteStreaming.swift */,
 				A00000000000000000000037 /* ExchangeStreamEvent.swift */,
 				A0000000000000000000011E /* OKX */,
@@ -370,9 +376,11 @@
 				A00000000000000000000128 /* ConnectionBadgeView.swift in Sources */,
 				A00000000000000000000019 /* ConnectionState.swift in Sources */,
 				A00000000000000000000120 /* ExchangePickerView.swift in Sources */,
+				A00000000000000000000154 /* ExchangeMarketDetailsLoading.swift in Sources */,
 				A00000000000000000000034 /* ExchangeQuoteStreaming.swift in Sources */,
 				A00000000000000000000017 /* ExchangeID.swift in Sources */,
 				A00000000000000000000036 /* ExchangeStreamEvent.swift in Sources */,
+				A00000000000000000000152 /* MarketDetailsSnapshot.swift in Sources */,
 				A0000000000000000000011B /* OKXQuoteStream.swift in Sources */,
 				A00000000000000000000119 /* OKXTickerEnvelope.swift in Sources */,
 				A00000000000000000000124 /* PriceHeaderView.swift in Sources */,
