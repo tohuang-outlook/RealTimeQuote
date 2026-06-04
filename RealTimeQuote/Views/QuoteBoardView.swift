@@ -58,7 +58,7 @@ struct QuoteBoardPresentationState: Equatable {
     let connectionState: ConnectionState
     let lastSelectionError: String?
 
-    init(snapshot: QuoteSnapshot, lastSelectionError: String?) {
+    init(snapshot: QuoteSnapshot, marketDetails: MarketDetailsSnapshot, lastSelectionError: String?) {
         header = PriceHeaderView.Content(
             symbol: snapshot.displaySymbol,
             exchangeName: snapshot.exchange.displayName,
@@ -71,7 +71,7 @@ struct QuoteBoardPresentationState: Equatable {
         stats = [
             StatsGridView.Item(
                 label: "Open",
-                value: "--",
+                value: Self.currencyText(marketDetails.open),
                 valueColor: .white
             ),
             StatsGridView.Item(
@@ -86,17 +86,17 @@ struct QuoteBoardPresentationState: Equatable {
             ),
             StatsGridView.Item(
                 label: "Prev Close",
-                value: "--",
+                value: Self.currencyText(marketDetails.prevClose),
                 valueColor: .white
             ),
             StatsGridView.Item(
                 label: "52 Wk High",
-                value: "--",
+                value: Self.currencyText(marketDetails.week52High),
                 valueColor: .white
             ),
             StatsGridView.Item(
                 label: "52 Wk Low",
-                value: "--",
+                value: Self.currencyText(marketDetails.week52Low),
                 valueColor: .white
             ),
             StatsGridView.Item(
@@ -106,7 +106,7 @@ struct QuoteBoardPresentationState: Equatable {
             ),
             StatsGridView.Item(
                 label: "Market Cap",
-                value: "--",
+                value: Self.marketCapText(marketDetails.marketCap),
                 valueColor: .white
             )
         ]
@@ -129,6 +129,28 @@ struct QuoteBoardPresentationState: Equatable {
     private static func volumeText(_ value: Decimal?) -> String {
         guard let value else { return "--" }
         return volumeFormatter.string(from: value as NSDecimalNumber) ?? "--"
+    }
+
+    private static func marketCapText(_ value: Decimal?) -> String {
+        guard let value else { return "--" }
+
+        let trillion = Decimal(string: "1000000000000")!
+        let billion = Decimal(string: "1000000000")!
+        let million = Decimal(string: "1000000")!
+        let thousand = Decimal(string: "1000")!
+
+        switch value {
+        case let value where value >= trillion:
+            return abbreviatedText(value / trillion, suffix: "T")
+        case let value where value >= billion:
+            return abbreviatedText(value / billion, suffix: "B")
+        case let value where value >= million:
+            return abbreviatedText(value / million, suffix: "M")
+        case let value where value >= thousand:
+            return abbreviatedText(value / thousand, suffix: "K")
+        default:
+            return currencyFormatter.string(from: value as NSDecimalNumber) ?? "--"
+        }
     }
 
     private static func changeAmountText(_ absolute: Decimal?) -> String {
@@ -201,6 +223,22 @@ struct QuoteBoardPresentationState: Equatable {
         formatter.dateFormat = "MM/dd HH:mm z"
         return formatter
     }()
+
+    private static func abbreviatedText(_ value: Decimal, suffix: String) -> String {
+        let number = NSDecimalNumber(decimal: value)
+        let text = abbreviatedNumberFormatter.string(from: number) ?? "--"
+        return "\(text)\(suffix)"
+    }
+
+    private static let abbreviatedNumberFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.locale = Locale(identifier: "en_US")
+        formatter.numberStyle = .decimal
+        formatter.minimumFractionDigits = 0
+        formatter.maximumFractionDigits = 2
+        formatter.usesGroupingSeparator = true
+        return formatter
+    }()
 }
 
 private struct QuoteBoardLayoutMetrics {
@@ -239,6 +277,7 @@ struct QuoteBoardView: View {
     var body: some View {
         let presentation = QuoteBoardPresentationState(
             snapshot: viewModel.snapshot,
+            marketDetails: viewModel.marketDetails,
             lastSelectionError: viewModel.lastSelectionError
         )
 

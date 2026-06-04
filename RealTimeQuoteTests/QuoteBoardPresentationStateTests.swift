@@ -18,6 +18,13 @@ final class QuoteBoardPresentationStateTests: XCTestCase {
 
         let presentation = QuoteBoardPresentationState(
             snapshot: snapshot,
+            marketDetails: MarketDetailsSnapshot(
+                open: Decimal(string: "70849.51"),
+                prevClose: Decimal(string: "70851.01"),
+                week52High: nil,
+                week52Low: nil,
+                marketCap: nil
+            ),
             lastSelectionError: "ignored"
         )
 
@@ -30,10 +37,10 @@ final class QuoteBoardPresentationStateTests: XCTestCase {
         XCTAssertEqual(
             presentation.stats,
             [
-                StatsGridView.Item(label: "Open", value: "--", valueColor: .white),
+                StatsGridView.Item(label: "Open", value: "$70,849.51", valueColor: .white),
                 StatsGridView.Item(label: "High", value: "$74,172.05", valueColor: QuoteBoardTheme.positive),
                 StatsGridView.Item(label: "Low", value: "$73,127.08", valueColor: QuoteBoardTheme.negative),
-                StatsGridView.Item(label: "Prev Close", value: "--", valueColor: .white),
+                StatsGridView.Item(label: "Prev Close", value: "$70,851.01", valueColor: .white),
                 StatsGridView.Item(label: "52 Wk High", value: "--", valueColor: .white),
                 StatsGridView.Item(label: "52 Wk Low", value: "--", valueColor: .white),
                 StatsGridView.Item(label: "24H Volume", value: "4,040.12", valueColor: .white),
