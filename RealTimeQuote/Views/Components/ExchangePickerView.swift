@@ -32,7 +32,6 @@ struct ExchangePickerView: View {
                     .buttonStyle(.plain)
                 }
             }
-            .frame(width: 180, alignment: .leading)
         }
     }
 }

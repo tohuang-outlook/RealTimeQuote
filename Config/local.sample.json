@@ -15,5 +15,9 @@
     "apiSecret": "your-okx-secret",
     "passphrase": "your-okx-passphrase",
     "useAuthenticatedFeed": false
+  },
+  "coinGecko": {
+    "apiKey": "your-coingecko-demo-or-pro-key",
+    "useProAPI": false
   }
 }

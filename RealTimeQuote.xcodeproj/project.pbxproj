@@ -35,6 +35,9 @@
 		A00000000000000000000154 /* ExchangeMarketDetailsLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000155 /* ExchangeMarketDetailsLoading.swift */; };
 		A00000000000000000000156 /* CoinbaseMarketDetailsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000157 /* CoinbaseMarketDetailsLoader.swift */; };
 		A00000000000000000000158 /* OKXMarketDetailsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000159 /* OKXMarketDetailsLoader.swift */; };
+		A00000000000000000000160 /* ReferenceStatsSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000161 /* ReferenceStatsSnapshot.swift */; };
+		A00000000000000000000162 /* ReferenceStatsLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000163 /* ReferenceStatsLoading.swift */; };
+		A00000000000000000000164 /* CoinGeckoReferenceStatsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000165 /* CoinGeckoReferenceStatsLoader.swift */; };
 		A00000000000000000000122 /* TradingPairPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000123 /* TradingPairPickerView.swift */; };
 		A00000000000000000000124 /* PriceHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000125 /* PriceHeaderView.swift */; };
 		A00000000000000000000126 /* StatsGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000127 /* StatsGridView.swift */; };
@@ -85,6 +88,9 @@
 		A00000000000000000000155 /* ExchangeMarketDetailsLoading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeMarketDetailsLoading.swift; sourceTree = "<group>"; };
 		A00000000000000000000157 /* CoinbaseMarketDetailsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinbaseMarketDetailsLoader.swift; sourceTree = "<group>"; };
 		A00000000000000000000159 /* OKXMarketDetailsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OKXMarketDetailsLoader.swift; sourceTree = "<group>"; };
+		A00000000000000000000161 /* ReferenceStatsSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReferenceStatsSnapshot.swift; sourceTree = "<group>"; };
+		A00000000000000000000163 /* ReferenceStatsLoading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReferenceStatsLoading.swift; sourceTree = "<group>"; };
+		A00000000000000000000165 /* CoinGeckoReferenceStatsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinGeckoReferenceStatsLoader.swift; sourceTree = "<group>"; };
 		A00000000000000000000123 /* TradingPairPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradingPairPickerView.swift; sourceTree = "<group>"; };
 		A00000000000000000000125 /* PriceHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceHeaderView.swift; sourceTree = "<group>"; };
 		A00000000000000000000127 /* StatsGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsGridView.swift; sourceTree = "<group>"; };
@@ -203,6 +209,7 @@
 			children = (
 				A00000000000000000000028 /* ExchangeID.swift */,
 				A00000000000000000000153 /* MarketDetailsSnapshot.swift */,
+				A00000000000000000000161 /* ReferenceStatsSnapshot.swift */,
 				A00000000000000000000029 /* TradingPair.swift */,
 				A0000000000000000000002A /* ConnectionState.swift */,
 				A0000000000000000000002B /* QuoteSnapshot.swift */,
@@ -215,8 +222,18 @@
 			children = (
 				A0000000000000000000002C /* AppSettingsStore.swift */,
 				A0000000000000000000006B /* Exchanges */,
+				A00000000000000000000166 /* ReferenceData */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		A00000000000000000000166 /* ReferenceData */ = {
+			isa = PBXGroup;
+			children = (
+				A00000000000000000000165 /* CoinGeckoReferenceStatsLoader.swift */,
+				A00000000000000000000163 /* ReferenceStatsLoading.swift */,
+			);
+			path = ReferenceData;
 			sourceTree = "<group>";
 		};
 		A0000000000000000000006B /* Exchanges */ = {
@@ -388,6 +405,7 @@
 				A00000000000000000000017 /* ExchangeID.swift in Sources */,
 				A00000000000000000000036 /* ExchangeStreamEvent.swift in Sources */,
 				A00000000000000000000152 /* MarketDetailsSnapshot.swift in Sources */,
+				A00000000000000000000164 /* CoinGeckoReferenceStatsLoader.swift in Sources */,
 				A00000000000000000000158 /* OKXMarketDetailsLoader.swift in Sources */,
 				A0000000000000000000011B /* OKXQuoteStream.swift in Sources */,
 				A00000000000000000000119 /* OKXTickerEnvelope.swift in Sources */,
@@ -396,6 +414,8 @@
 				A0000000000000000000001C /* QuoteBoardViewModel.swift in Sources */,
 				A0000000000000000000001A /* QuoteSnapshot.swift in Sources */,
 				A00000000000000000000038 /* QuoteEngine.swift in Sources */,
+				A00000000000000000000162 /* ReferenceStatsLoading.swift in Sources */,
+				A00000000000000000000160 /* ReferenceStatsSnapshot.swift in Sources */,
 				A00000000000000000000011 /* RealTimeQuoteApp.swift in Sources */,
 				A00000000000000000000147 /* RuntimeConfigLoader.swift in Sources */,
 				A00000000000000000000142 /* RuntimeConfig.swift in Sources */,

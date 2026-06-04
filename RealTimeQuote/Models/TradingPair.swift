@@ -34,6 +34,19 @@ enum TradingPair: CaseIterable, Codable, Identifiable {
         }
     }
 
+    var coinGeckoID: String {
+        switch self {
+        case .btcUSD:
+            return "bitcoin"
+        case .ethUSD:
+            return "ethereum"
+        case .adaUSD:
+            return "cardano"
+        case .solUSD:
+            return "solana"
+        }
+    }
+
     var coinbaseProductID: String { displaySymbol }
     var okxInstrumentID: String { displaySymbol }
 

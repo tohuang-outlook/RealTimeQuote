@@ -3,9 +3,9 @@ import SwiftUI
 
 enum WindowStyler {
     static let widgetTopBarHeight: CGFloat = 0
-    static let minimumSize = CGSize(width: 560, height: 360)
-    static let idealSize = CGSize(width: 620, height: 390)
-    static let maximumSize = CGSize(width: 680, height: 430)
+    static let minimumSize = CGSize(width: 700, height: 300)
+    static let idealSize = CGSize(width: 760, height: 320)
+    static let maximumSize = CGSize(width: 860, height: 420)
     static let defaultSize = idealSize
 
     static func makeRootView<Content: View>(

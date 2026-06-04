@@ -58,7 +58,12 @@ struct QuoteBoardPresentationState: Equatable {
     let connectionState: ConnectionState
     let lastSelectionError: String?
 
-    init(snapshot: QuoteSnapshot, marketDetails: MarketDetailsSnapshot, lastSelectionError: String?) {
+    init(
+        snapshot: QuoteSnapshot,
+        marketDetails: MarketDetailsSnapshot,
+        referenceStats: ReferenceStatsSnapshot,
+        lastSelectionError: String?
+    ) {
         header = PriceHeaderView.Content(
             symbol: snapshot.displaySymbol,
             exchangeName: snapshot.exchange.displayName,
@@ -91,12 +96,12 @@ struct QuoteBoardPresentationState: Equatable {
             ),
             StatsGridView.Item(
                 label: "52 Wk High",
-                value: Self.currencyText(marketDetails.week52High),
+                value: Self.currencyText(referenceStats.week52High),
                 valueColor: .white
             ),
             StatsGridView.Item(
                 label: "52 Wk Low",
-                value: Self.currencyText(marketDetails.week52Low),
+                value: Self.currencyText(referenceStats.week52Low),
                 valueColor: .white
             ),
             StatsGridView.Item(
@@ -106,7 +111,7 @@ struct QuoteBoardPresentationState: Equatable {
             ),
             StatsGridView.Item(
                 label: "Market Cap",
-                value: Self.marketCapText(marketDetails.marketCap),
+                value: Self.marketCapText(referenceStats.marketCap),
                 valueColor: .white
             )
         ]
@@ -250,23 +255,25 @@ private struct QuoteBoardLayoutMetrics {
     let statsSpacing: CGFloat
     let heroPriceFontSize: CGFloat
     let statsColumnWidth: CGFloat
+    let statsColumnCount: Int
 
     static func make(for size: CGSize) -> QuoteBoardLayoutMetrics {
         let width = max(size.width, WindowStyler.minimumSize.width)
         let height = max(size.height, WindowStyler.minimumSize.height)
-        let widthProgress = min(max((width - WindowStyler.minimumSize.width) / 280, 0), 1)
-        let heightProgress = min(max((height - WindowStyler.minimumSize.height) / 180, 0), 1)
+        let widthProgress = min(max((width - WindowStyler.minimumSize.width) / 130, 0), 1)
+        let heightProgress = min(max((height - WindowStyler.minimumSize.height) / 90, 0), 1)
         let progress = max(widthProgress, heightProgress)
 
         return QuoteBoardLayoutMetrics(
-            contentHorizontalPadding: 22 + (12 * progress),
-            contentVerticalPadding: 18 + (10 * progress),
+            contentHorizontalPadding: 20 + (10 * progress),
+            contentVerticalPadding: 12 + (8 * progress),
             topChromeInset: 0,
-            sectionSpacing: 22 + (10 * progress),
-            controlSpacing: 14 + (8 * progress),
-            statsSpacing: 10 + (4 * progress),
+            sectionSpacing: 16 + (8 * progress),
+            controlSpacing: 12 + (6 * progress),
+            statsSpacing: 8 + (4 * progress),
             heroPriceFontSize: 42 + (22 * progress),
-            statsColumnWidth: 360 + (36 * progress)
+            statsColumnWidth: 300 + (72 * progress),
+            statsColumnCount: 2
         )
     }
 }
@@ -278,12 +285,12 @@ struct QuoteBoardView: View {
         let presentation = QuoteBoardPresentationState(
             snapshot: viewModel.snapshot,
             marketDetails: viewModel.marketDetails,
+            referenceStats: viewModel.referenceStats,
             lastSelectionError: viewModel.lastSelectionError
         )
 
         GeometryReader { geometry in
             let metrics = QuoteBoardLayoutMetrics.make(for: geometry.size)
-            let useStackedTerminalLayout = geometry.size.width < 780
 
             ZStack {
                 QuoteBoardTheme.cardFill
@@ -299,8 +306,7 @@ struct QuoteBoardView: View {
 
                     terminalBody(
                         presentation: presentation,
-                        metrics: metrics,
-                        useStackedLayout: useStackedTerminalLayout
+                        metrics: metrics
                     )
                 }
                 .padding(.leading, metrics.contentHorizontalPadding)
@@ -347,7 +353,7 @@ struct QuoteBoardView: View {
         StatsGridView(
             items: presentation.stats,
             spacing: metrics.statsSpacing,
-            numberOfColumns: 2
+            numberOfColumns: metrics.statsColumnCount
         )
         .frame(maxWidth: .infinity, alignment: .topLeading)
     }
@@ -355,36 +361,21 @@ struct QuoteBoardView: View {
     @ViewBuilder
     private func terminalBody(
         presentation: QuoteBoardPresentationState,
-        metrics: QuoteBoardLayoutMetrics,
-        useStackedLayout: Bool
+        metrics: QuoteBoardLayoutMetrics
     ) -> some View {
         VStack(alignment: .leading, spacing: metrics.sectionSpacing) {
-            if useStackedLayout {
-                VStack(alignment: .leading, spacing: metrics.sectionSpacing) {
-                    terminalQuoteColumn(
-                        presentation: presentation,
-                        metrics: metrics
-                    )
+            HStack(alignment: .top, spacing: metrics.sectionSpacing) {
+                terminalQuoteColumn(
+                    presentation: presentation,
+                    metrics: metrics
+                )
+                .frame(maxWidth: .infinity, alignment: .topLeading)
 
-                    terminalFieldsColumn(
-                        presentation: presentation,
-                        metrics: metrics
-                    )
-                }
-            } else {
-                HStack(alignment: .top, spacing: metrics.sectionSpacing) {
-                    terminalQuoteColumn(
-                        presentation: presentation,
-                        metrics: metrics
-                    )
-                    .frame(maxWidth: .infinity, alignment: .topLeading)
-
-                    terminalFieldsColumn(
-                        presentation: presentation,
-                        metrics: metrics
-                    )
-                    .frame(width: metrics.statsColumnWidth, alignment: .topLeading)
-                }
+                terminalFieldsColumn(
+                    presentation: presentation,
+                    metrics: metrics
+                )
+                .frame(width: metrics.statsColumnWidth, alignment: .topLeading)
             }
         }
     }

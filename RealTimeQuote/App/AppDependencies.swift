@@ -70,7 +70,8 @@ final class AppDependencies: ObservableObject {
             initialSelection: selection,
             settingsStore: settingsStore,
             quoteEngine: quoteEngine,
-            marketDetailsLoader: DefaultExchangeMarketDetailsLoader()
+            marketDetailsLoader: DefaultExchangeMarketDetailsLoader(),
+            referenceStatsLoader: CoinGeckoReferenceStatsLoader(config: config?.coinGecko)
         )
     }
 

@@ -5,18 +5,21 @@ import Foundation
 final class QuoteBoardViewModel: ObservableObject {
     @Published private(set) var snapshot: QuoteSnapshot
     @Published private(set) var marketDetails: MarketDetailsSnapshot
+    @Published private(set) var referenceStats: ReferenceStatsSnapshot
     @Published private(set) var selectedExchange: ExchangeID
     @Published private(set) var selectedPair: TradingPair
     @Published private(set) var lastSelectionError: String?
 
     private let quoteEngine: QuoteEngine
     private let marketDetailsLoader: ExchangeMarketDetailsLoading
+    private let referenceStatsLoader: ReferenceStatsLoading
     private let settingsStore: AppSettingsStore
     private let startupRetryAttempts: Int
     private let startupRetryDelayNanoseconds: UInt64
     private var cancellables = Set<AnyCancellable>()
     private var selectionAttempt: UInt64 = 0
     private var marketDetailsTask: Task<Void, Never>?
+    private var referenceStatsTask: Task<Void, Never>?
 
     static let preview = QuoteBoardViewModel(
         snapshot: QuoteSnapshot.placeholder(for: .btcUSD, exchange: .coinbase)
@@ -27,6 +30,7 @@ final class QuoteBoardViewModel: ObservableObject {
         settingsStore: AppSettingsStore,
         quoteEngine: QuoteEngine,
         marketDetailsLoader: ExchangeMarketDetailsLoading = NoOpExchangeMarketDetailsLoader(),
+        referenceStatsLoader: ReferenceStatsLoading = NoOpReferenceStatsLoader(),
         startupRetryAttempts: Int = 3,
         startupRetryDelayNanoseconds: UInt64 = 1_000_000_000
     ) {
@@ -35,6 +39,7 @@ final class QuoteBoardViewModel: ObservableObject {
 
         self.quoteEngine = quoteEngine
         self.marketDetailsLoader = marketDetailsLoader
+        self.referenceStatsLoader = referenceStatsLoader
         self.settingsStore = settingsStore
         self.startupRetryAttempts = startupRetryAttempts
         self.startupRetryDelayNanoseconds = startupRetryDelayNanoseconds
@@ -42,6 +47,7 @@ final class QuoteBoardViewModel: ObservableObject {
         self.selectedPair = selectedPair
         self.snapshot = quoteEngine.snapshot
         self.marketDetails = .empty
+        self.referenceStats = .empty
 
         quoteEngine.$snapshot
             .receive(on: RunLoop.main)
@@ -55,6 +61,7 @@ final class QuoteBoardViewModel: ObservableObject {
             do {
                 try await self.startupConnect(exchange: selectedExchange, pair: selectedPair)
                 self.refreshMarketDetails(exchange: selectedExchange, pair: selectedPair)
+                self.refreshReferenceStats(pair: selectedPair)
             } catch {
                 guard attempt == self.selectionAttempt else { return }
                 guard !(error is CancellationError) else { return }
@@ -66,6 +73,7 @@ final class QuoteBoardViewModel: ObservableObject {
     init(snapshot: QuoteSnapshot) {
         self.quoteEngine = QuoteEngine(initialSnapshot: snapshot, streamFactory: { _, _ in PreviewExchangeQuoteStream() })
         self.marketDetailsLoader = NoOpExchangeMarketDetailsLoader()
+        self.referenceStatsLoader = NoOpReferenceStatsLoader()
         self.settingsStore = Self.makePreviewSettingsStore()
         self.startupRetryAttempts = 1
         self.startupRetryDelayNanoseconds = 0
@@ -73,6 +81,7 @@ final class QuoteBoardViewModel: ObservableObject {
         self.selectedPair = snapshot.pair
         self.snapshot = snapshot
         self.marketDetails = .empty
+        self.referenceStats = .empty
 
         quoteEngine.$snapshot
             .receive(on: RunLoop.main)
@@ -88,11 +97,13 @@ final class QuoteBoardViewModel: ObservableObject {
         let previousExchange = selectedExchange
         let previousPair = selectedPair
         let previousMarketDetails = marketDetails
+        let previousReferenceStats = referenceStats
         selectionAttempt &+= 1
         let attempt = selectionAttempt
 
         selectedExchange = exchange
         marketDetails = .empty
+        referenceStats = .empty
         lastSelectionError = nil
 
         Task {
@@ -101,11 +112,13 @@ final class QuoteBoardViewModel: ObservableObject {
                 guard attempt == self.selectionAttempt else { return }
                 self.settingsStore.setSelection(exchange: exchange, pair: previousPair)
                 self.refreshMarketDetails(exchange: exchange, pair: previousPair)
+                self.refreshReferenceStats(pair: previousPair)
             } catch {
                 guard attempt == self.selectionAttempt else { return }
                 self.selectedExchange = previousExchange
                 self.selectedPair = previousPair
                 self.marketDetails = previousMarketDetails
+                self.referenceStats = previousReferenceStats
                 self.lastSelectionError = error.localizedDescription
             }
         }
@@ -117,11 +130,13 @@ final class QuoteBoardViewModel: ObservableObject {
         let previousExchange = selectedExchange
         let previousPair = selectedPair
         let previousMarketDetails = marketDetails
+        let previousReferenceStats = referenceStats
         selectionAttempt &+= 1
         let attempt = selectionAttempt
 
         selectedPair = pair
         marketDetails = .empty
+        referenceStats = .empty
         lastSelectionError = nil
 
         Task {
@@ -130,11 +145,13 @@ final class QuoteBoardViewModel: ObservableObject {
                 guard attempt == self.selectionAttempt else { return }
                 self.settingsStore.setSelection(exchange: previousExchange, pair: pair)
                 self.refreshMarketDetails(exchange: previousExchange, pair: pair)
+                self.refreshReferenceStats(pair: pair)
             } catch {
                 guard attempt == self.selectionAttempt else { return }
                 self.selectedExchange = previousExchange
                 self.selectedPair = previousPair
                 self.marketDetails = previousMarketDetails
+                self.referenceStats = previousReferenceStats
                 self.lastSelectionError = error.localizedDescription
             }
         }
@@ -156,6 +173,26 @@ final class QuoteBoardViewModel: ObservableObject {
                 guard !Task.isCancelled else { return }
                 guard self.selectedExchange == exchange, self.selectedPair == pair else { return }
                 self.marketDetails = .empty
+            }
+        }
+    }
+
+    private func refreshReferenceStats(pair: TradingPair) {
+        referenceStatsTask?.cancel()
+        referenceStatsTask = Task { [weak self] in
+            guard let self else { return }
+
+            do {
+                let stats = try await self.referenceStatsLoader.loadStats(for: pair)
+                guard !Task.isCancelled else { return }
+                guard self.selectedPair == pair else { return }
+                self.referenceStats = stats
+            } catch is CancellationError {
+                return
+            } catch {
+                guard !Task.isCancelled else { return }
+                guard self.selectedPair == pair else { return }
+                self.referenceStats = .empty
             }
         }
     }
