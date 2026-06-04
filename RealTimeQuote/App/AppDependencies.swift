@@ -69,7 +69,8 @@ final class AppDependencies: ObservableObject {
         return QuoteBoardViewModel(
             initialSelection: selection,
             settingsStore: settingsStore,
-            quoteEngine: quoteEngine
+            quoteEngine: quoteEngine,
+            marketDetailsLoader: DefaultExchangeMarketDetailsLoader()
         )
     }
 

@@ -94,6 +94,32 @@ final class AppDependenciesFactoryTests: XCTestCase {
         XCTAssertEqual(viewModel.marketDetails, .empty)
     }
 
+    func testViewModelLoadsMarketDetailsAfterStartupConnect() async {
+        let expected = MarketDetailsSnapshot(
+            open: Decimal(string: "63000.00"),
+            prevClose: Decimal(string: "62500.00"),
+            week52High: nil,
+            week52Low: nil,
+            marketCap: nil
+        )
+
+        let viewModel = QuoteBoardViewModel(
+            initialSelection: AppBootstrapSelection(exchange: .coinbase, pair: .btcUSD),
+            settingsStore: InMemoryAppSettingsStore(selection: nil),
+            quoteEngine: QuoteEngine(
+                initialSnapshot: .placeholder(for: .btcUSD, exchange: .coinbase),
+                streamFactory: { _, _ in TestExchangeQuoteStream() }
+            ),
+            marketDetailsLoader: StubMarketDetailsLoader(result: expected),
+            startupRetryAttempts: 1,
+            startupRetryDelayNanoseconds: 0
+        )
+
+        await waitUntil { viewModel.marketDetails == expected }
+
+        XCTAssertEqual(viewModel.marketDetails, expected)
+    }
+
     private func makeViewModel(
         initialSelection: AppBootstrapSelection,
         settingsStore: AppSettingsStore
@@ -155,4 +181,12 @@ private final class TestExchangeQuoteStream: ExchangeQuoteStreaming {
     func start(exchange: ExchangeID, pair: TradingPair) async throws {}
 
     func stop() {}
+}
+
+private struct StubMarketDetailsLoader: ExchangeMarketDetailsLoading {
+    let result: MarketDetailsSnapshot
+
+    func loadDetails(for exchange: ExchangeID, pair: TradingPair) async throws -> MarketDetailsSnapshot {
+        result
+    }
 }

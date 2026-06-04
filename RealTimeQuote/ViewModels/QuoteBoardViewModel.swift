@@ -16,6 +16,7 @@ final class QuoteBoardViewModel: ObservableObject {
     private let startupRetryDelayNanoseconds: UInt64
     private var cancellables = Set<AnyCancellable>()
     private var selectionAttempt: UInt64 = 0
+    private var marketDetailsTask: Task<Void, Never>?
 
     static let preview = QuoteBoardViewModel(
         snapshot: QuoteSnapshot.placeholder(for: .btcUSD, exchange: .coinbase)
@@ -53,6 +54,7 @@ final class QuoteBoardViewModel: ObservableObject {
         Task {
             do {
                 try await self.startupConnect(exchange: selectedExchange, pair: selectedPair)
+                self.refreshMarketDetails(exchange: selectedExchange, pair: selectedPair)
             } catch {
                 guard attempt == self.selectionAttempt else { return }
                 guard !(error is CancellationError) else { return }
@@ -85,6 +87,7 @@ final class QuoteBoardViewModel: ObservableObject {
 
         let previousExchange = selectedExchange
         let previousPair = selectedPair
+        let previousMarketDetails = marketDetails
         selectionAttempt &+= 1
         let attempt = selectionAttempt
 
@@ -97,10 +100,12 @@ final class QuoteBoardViewModel: ObservableObject {
                 try await quoteEngine.updateSelection(exchange: exchange, pair: previousPair)
                 guard attempt == self.selectionAttempt else { return }
                 self.settingsStore.setSelection(exchange: exchange, pair: previousPair)
+                self.refreshMarketDetails(exchange: exchange, pair: previousPair)
             } catch {
                 guard attempt == self.selectionAttempt else { return }
                 self.selectedExchange = previousExchange
                 self.selectedPair = previousPair
+                self.marketDetails = previousMarketDetails
                 self.lastSelectionError = error.localizedDescription
             }
         }
@@ -111,6 +116,7 @@ final class QuoteBoardViewModel: ObservableObject {
 
         let previousExchange = selectedExchange
         let previousPair = selectedPair
+        let previousMarketDetails = marketDetails
         selectionAttempt &+= 1
         let attempt = selectionAttempt
 
@@ -123,11 +129,33 @@ final class QuoteBoardViewModel: ObservableObject {
                 try await quoteEngine.updateSelection(exchange: previousExchange, pair: pair)
                 guard attempt == self.selectionAttempt else { return }
                 self.settingsStore.setSelection(exchange: previousExchange, pair: pair)
+                self.refreshMarketDetails(exchange: previousExchange, pair: pair)
             } catch {
                 guard attempt == self.selectionAttempt else { return }
                 self.selectedExchange = previousExchange
                 self.selectedPair = previousPair
+                self.marketDetails = previousMarketDetails
                 self.lastSelectionError = error.localizedDescription
+            }
+        }
+    }
+
+    private func refreshMarketDetails(exchange: ExchangeID, pair: TradingPair) {
+        marketDetailsTask?.cancel()
+        marketDetailsTask = Task { [weak self] in
+            guard let self else { return }
+
+            do {
+                let details = try await self.marketDetailsLoader.loadDetails(for: exchange, pair: pair)
+                guard !Task.isCancelled else { return }
+                guard self.selectedExchange == exchange, self.selectedPair == pair else { return }
+                self.marketDetails = details
+            } catch is CancellationError {
+                return
+            } catch {
+                guard !Task.isCancelled else { return }
+                guard self.selectedExchange == exchange, self.selectedPair == pair else { return }
+                self.marketDetails = .empty
             }
         }
     }
