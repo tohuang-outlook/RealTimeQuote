@@ -10,14 +10,29 @@ struct ExchangePickerView: View {
                 .foregroundStyle(QuoteBoardTheme.secondaryText)
                 .textCase(.uppercase)
 
-            Picker("Exchange", selection: $selection) {
+            HStack(spacing: 10) {
                 ForEach(ExchangeID.allCases) { exchange in
-                    Text(exchange.displayName).tag(exchange)
+                    Button {
+                        selection = exchange
+                    } label: {
+                        Text(exchange.displayName)
+                            .font(QuoteBoardTheme.regularFont(size: 13))
+                            .foregroundStyle(exchange == selection ? Color.white : QuoteBoardTheme.primaryText)
+                            .padding(.horizontal, 14)
+                            .padding(.vertical, 7)
+                            .background(
+                                RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                    .fill(exchange == selection ? Color.accentColor : Color.white.opacity(0.03))
+                            )
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                    .stroke(exchange == selection ? Color.accentColor.opacity(0.9) : Color.white.opacity(0.08), lineWidth: 1)
+                            )
+                    }
+                    .buttonStyle(.plain)
                 }
             }
-            .pickerStyle(.segmented)
-            .labelsHidden()
-            .frame(width: 180)
+            .frame(width: 180, alignment: .leading)
         }
     }
 }

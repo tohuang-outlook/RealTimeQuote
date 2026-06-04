@@ -242,9 +242,9 @@ struct QuoteBoardPresentationState: Equatable {
 }
 
 private struct QuoteBoardLayoutMetrics {
-    let outerPadding: CGFloat
     let contentHorizontalPadding: CGFloat
     let contentVerticalPadding: CGFloat
+    let topChromeInset: CGFloat
     let sectionSpacing: CGFloat
     let controlSpacing: CGFloat
     let statsSpacing: CGFloat
@@ -259,9 +259,9 @@ private struct QuoteBoardLayoutMetrics {
         let progress = max(widthProgress, heightProgress)
 
         return QuoteBoardLayoutMetrics(
-            outerPadding: 18 + (10 * progress),
-            contentHorizontalPadding: 28 + (14 * progress),
-            contentVerticalPadding: 24 + (12 * progress),
+            contentHorizontalPadding: 22 + (12 * progress),
+            contentVerticalPadding: 18 + (10 * progress),
+            topChromeInset: 0,
             sectionSpacing: 22 + (10 * progress),
             controlSpacing: 14 + (8 * progress),
             statsSpacing: 10 + (4 * progress),
@@ -281,47 +281,32 @@ struct QuoteBoardView: View {
             lastSelectionError: viewModel.lastSelectionError
         )
 
-        VStack(spacing: 0) {
-            Rectangle()
-                .fill(Color.black)
-                .frame(height: WindowStyler.widgetTopBarHeight)
+        GeometryReader { geometry in
+            let metrics = QuoteBoardLayoutMetrics.make(for: geometry.size)
+            let useStackedTerminalLayout = geometry.size.width < 780
 
-            GeometryReader { geometry in
-                let metrics = QuoteBoardLayoutMetrics.make(for: geometry.size)
-                let useStackedTerminalLayout = geometry.size.width < 780
+            ZStack {
+                QuoteBoardTheme.cardFill
+                    .ignoresSafeArea()
 
-                ZStack {
-                    QuoteBoardTheme.backgroundGradient
-                        .ignoresSafeArea()
-
-                    RoundedRectangle(cornerRadius: QuoteBoardTheme.cardCornerRadius, style: .continuous)
-                        .fill(QuoteBoardTheme.cardFill)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: QuoteBoardTheme.cardCornerRadius, style: .continuous)
-                                .stroke(QuoteBoardTheme.cardStroke, lineWidth: 1)
-                        )
-                        .shadow(color: QuoteBoardTheme.cardShadow, radius: 24, y: 16)
-                        .padding(metrics.outerPadding)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-
-                    VStack(alignment: .leading, spacing: metrics.sectionSpacing) {
-                        HStack(alignment: .top, spacing: metrics.controlSpacing) {
-                            ExchangePickerView(selection: exchangeSelection)
-                            TradingPairPickerView(selection: pairSelection)
-                            Spacer(minLength: 0)
-                            ConnectionBadgeView(state: presentation.connectionState)
-                        }
-
-                        terminalBody(
-                            presentation: presentation,
-                            metrics: metrics,
-                            useStackedLayout: useStackedTerminalLayout
-                        )
+                VStack(alignment: .leading, spacing: metrics.sectionSpacing) {
+                    HStack(alignment: .top, spacing: metrics.controlSpacing) {
+                        ExchangePickerView(selection: exchangeSelection)
+                        TradingPairPickerView(selection: pairSelection)
+                        Spacer(minLength: 0)
+                        ConnectionBadgeView(state: presentation.connectionState)
                     }
-                    .padding(.horizontal, metrics.contentHorizontalPadding)
-                    .padding(.vertical, metrics.contentVerticalPadding)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+
+                    terminalBody(
+                        presentation: presentation,
+                        metrics: metrics,
+                        useStackedLayout: useStackedTerminalLayout
+                    )
                 }
+                .padding(.leading, metrics.contentHorizontalPadding)
+                .padding(.trailing, metrics.contentHorizontalPadding)
+                .padding(.bottom, metrics.contentVerticalPadding)
+                .padding(.top, metrics.topChromeInset)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }

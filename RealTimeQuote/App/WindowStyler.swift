@@ -2,7 +2,7 @@ import AppKit
 import SwiftUI
 
 enum WindowStyler {
-    static let widgetTopBarHeight: CGFloat = 22
+    static let widgetTopBarHeight: CGFloat = 0
     static let minimumSize = CGSize(width: 560, height: 360)
     static let idealSize = CGSize(width: 620, height: 390)
     static let maximumSize = CGSize(width: 680, height: 430)
@@ -13,7 +13,7 @@ enum WindowStyler {
     ) -> some View {
         ZStack {
             content()
-                .background(.black)
+                .background(QuoteBoardTheme.cardFill)
 
             WindowChromeConfigurator()
                 .allowsHitTesting(false)
@@ -26,7 +26,7 @@ enum WindowStyler {
             idealHeight: idealSize.height,
             maxHeight: maximumSize.height
         )
-        .background(.black)
+        .background(QuoteBoardTheme.cardFill)
     }
 }
 
@@ -57,7 +57,7 @@ private struct WindowChromeConfigurator: NSViewRepresentable {
         window.contentMaxSize = WindowStyler.maximumSize
         window.minSize = window.frameRect(forContentRect: NSRect(origin: .zero, size: WindowStyler.minimumSize)).size
         window.maxSize = window.frameRect(forContentRect: NSRect(origin: .zero, size: WindowStyler.maximumSize)).size
-        window.backgroundColor = .black
+        window.backgroundColor = NSColor(red: 0.06, green: 0.06, blue: 0.08, alpha: 1)
         window.isOpaque = true
         window.titlebarSeparatorStyle = .none
         window.isMovableByWindowBackground = true

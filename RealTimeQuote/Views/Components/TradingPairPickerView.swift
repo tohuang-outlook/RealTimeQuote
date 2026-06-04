@@ -7,27 +7,31 @@ struct TradingPairPickerView: View {
         VStack(alignment: .leading, spacing: QuoteBoardTheme.compactSpacing) {
             Text("Pair")
                 .font(QuoteBoardTheme.regularFont(size: 11))
-                .foregroundStyle(QuoteBoardTheme.secondaryText)
+                .foregroundStyle(Color.white.opacity(0.72))
                 .textCase(.uppercase)
 
-            Picker("Trading Pair", selection: $selection) {
+            HStack(spacing: 10) {
                 ForEach(TradingPair.allCases) { pair in
-                    Text(pair.displaySymbol).tag(pair)
+                    Button {
+                        selection = pair
+                    } label: {
+                        Text(pair.displaySymbol)
+                            .font(QuoteBoardTheme.regularFont(size: 13))
+                            .foregroundStyle(pair == selection ? Color.white : QuoteBoardTheme.primaryText)
+                            .padding(.horizontal, 14)
+                            .padding(.vertical, 7)
+                            .background(
+                                RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                    .fill(pair == selection ? Color.white.opacity(0.10) : Color.white.opacity(0.03))
+                            )
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                    .stroke(pair == selection ? Color.white.opacity(0.22) : Color.white.opacity(0.08), lineWidth: 1)
+                            )
+                    }
+                    .buttonStyle(.plain)
                 }
             }
-            .pickerStyle(.menu)
-            .labelsHidden()
-            .frame(minWidth: 130)
-            .padding(.horizontal, 12)
-            .padding(.vertical, 8)
-            .background(
-                QuoteBoardTheme.badgeFill,
-                in: RoundedRectangle(cornerRadius: QuoteBoardTheme.controlCornerRadius, style: .continuous)
-            )
-            .overlay(
-                RoundedRectangle(cornerRadius: QuoteBoardTheme.controlCornerRadius, style: .continuous)
-                    .stroke(QuoteBoardTheme.panelStroke, lineWidth: 1)
-            )
         }
     }
 }
