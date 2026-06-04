@@ -11,8 +11,9 @@ struct PriceHeaderView: View {
         let symbol: String
         let exchangeName: String
         let priceText: String
-        let changeText: String
-        let updatedAtText: String
+        let changeAmountText: String
+        let changePercentText: String
+        let secondaryLineText: String
         let changeTone: ChangeTone
     }
 
@@ -20,33 +21,39 @@ struct PriceHeaderView: View {
     let heroPriceFontSize: CGFloat
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            HStack(alignment: .firstTextBaseline, spacing: 12) {
+        VStack(alignment: .leading, spacing: 6) {
+            HStack(alignment: .firstTextBaseline, spacing: 8) {
                 Text(content.symbol)
-                    .font(QuoteBoardTheme.boldFont(size: 18))
+                    .font(QuoteBoardTheme.regularFont(size: 14))
                     .foregroundStyle(QuoteBoardTheme.primaryText)
 
                 Text(content.exchangeName)
-                    .font(QuoteBoardTheme.regularFont(size: 12))
-                    .foregroundStyle(QuoteBoardTheme.tertiaryText)
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 5)
-                    .background(QuoteBoardTheme.badgeFill, in: Capsule())
+                    .font(QuoteBoardTheme.regularFont(size: 14))
+                    .foregroundStyle(QuoteBoardTheme.primaryText)
             }
 
-            Text(content.priceText)
-                .font(QuoteBoardTheme.heavyFont(size: heroPriceFontSize))
-                .foregroundStyle(trendColor)
-                .lineLimit(1)
-                .minimumScaleFactor(0.75)
+            HStack(alignment: .top, spacing: 10) {
+                Text(content.priceText)
+                    .font(QuoteBoardTheme.heavyFont(size: heroPriceFontSize))
+                    .foregroundStyle(trendColor)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.75)
 
-            Text(content.changeText)
-                .font(QuoteBoardTheme.regularFont(size: 16))
-                .foregroundStyle(trendColor)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(content.changeAmountText)
+                        .font(QuoteBoardTheme.regularFont(size: 14))
+                        .foregroundStyle(trendColor)
 
-            Text(content.updatedAtText)
+                    Text(content.changePercentText)
+                        .font(QuoteBoardTheme.regularFont(size: 14))
+                        .foregroundStyle(trendColor)
+                }
+                .padding(.top, 8)
+            }
+
+            Text(content.secondaryLineText)
                 .font(QuoteBoardTheme.regularFont(size: 12))
-                .foregroundStyle(QuoteBoardTheme.tertiaryText)
+                .foregroundStyle(QuoteBoardTheme.secondaryText)
         }
     }
 

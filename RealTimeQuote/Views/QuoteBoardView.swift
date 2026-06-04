@@ -63,24 +63,50 @@ struct QuoteBoardPresentationState: Equatable {
             symbol: snapshot.displaySymbol,
             exchangeName: snapshot.exchange.displayName,
             priceText: Self.currencyText(snapshot.lastPrice),
-            changeText: Self.changeText(absolute: snapshot.absoluteChange, percent: snapshot.percentChange),
-            updatedAtText: Self.updatedAtText(snapshot.updatedAt),
+            changeAmountText: Self.changeAmountText(snapshot.absoluteChange),
+            changePercentText: Self.changePercentText(snapshot.percentChange),
+            secondaryLineText: Self.secondaryLineText(snapshot.updatedAt),
             changeTone: Self.changeTone(snapshot.absoluteChange)
         )
         stats = [
             StatsGridView.Item(
-                label: "24H HIGH",
+                label: "Open",
+                value: "--",
+                valueColor: .white
+            ),
+            StatsGridView.Item(
+                label: "High",
                 value: Self.currencyText(snapshot.high24h),
                 valueColor: QuoteBoardTheme.positive
             ),
             StatsGridView.Item(
-                label: "24H LOW",
+                label: "Low",
                 value: Self.currencyText(snapshot.low24h),
                 valueColor: QuoteBoardTheme.negative
             ),
             StatsGridView.Item(
-                label: "24H VOL",
+                label: "Prev Close",
+                value: "--",
+                valueColor: .white
+            ),
+            StatsGridView.Item(
+                label: "52 Wk High",
+                value: "--",
+                valueColor: .white
+            ),
+            StatsGridView.Item(
+                label: "52 Wk Low",
+                value: "--",
+                valueColor: .white
+            ),
+            StatsGridView.Item(
+                label: "24H Volume",
                 value: Self.volumeText(snapshot.volume24h),
+                valueColor: .white
+            ),
+            StatsGridView.Item(
+                label: "Market Cap",
+                value: "--",
                 valueColor: .white
             )
         ]
@@ -105,17 +131,20 @@ struct QuoteBoardPresentationState: Equatable {
         return volumeFormatter.string(from: value as NSDecimalNumber) ?? "--"
     }
 
-    private static func changeText(absolute: Decimal?, percent: Decimal?) -> String {
-        guard let absolute, let percent else { return "Awaiting 24h change" }
-        let absoluteText = currencyFormatter.string(from: absolute as NSDecimalNumber) ?? "--"
-        let percentText = percentFormatter.string(from: percent as NSDecimalNumber) ?? "--"
-        let signPrefix = absolute > 0 ? "+" : ""
-        return "\(signPrefix)\(absoluteText) (\(percentText))"
+    private static func changeAmountText(_ absolute: Decimal?) -> String {
+        guard let absolute else { return "--" }
+        let absoluteText = signedDecimalFormatter.string(from: absolute as NSDecimalNumber) ?? "--"
+        return absoluteText
     }
 
-    private static func updatedAtText(_ updatedAt: Date?) -> String {
-        guard let updatedAt else { return "Waiting for live market data" }
-        return "Updated \(timeFormatter.string(from: updatedAt))"
+    private static func changePercentText(_ percent: Decimal?) -> String {
+        guard let percent else { return "--" }
+        return percentFormatter.string(from: percent as NSDecimalNumber) ?? "--"
+    }
+
+    private static func secondaryLineText(_ updatedAt: Date?) -> String {
+        guard let updatedAt else { return "Open, Mid Price --" }
+        return "Open, Mid Price \(secondaryLineFormatter.string(from: updatedAt))"
     }
 
     private static let currencyFormatter: NumberFormatter = {
@@ -143,6 +172,18 @@ struct QuoteBoardPresentationState: Equatable {
         return formatter
     }()
 
+    private static let signedDecimalFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.locale = Locale(identifier: "en_US")
+        formatter.numberStyle = .decimal
+        formatter.positivePrefix = "+"
+        formatter.negativePrefix = "-"
+        formatter.minimumFractionDigits = 2
+        formatter.maximumFractionDigits = 2
+        formatter.usesGroupingSeparator = true
+        return formatter
+    }()
+
     private static let volumeFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.locale = Locale(identifier: "en_US")
@@ -153,11 +194,11 @@ struct QuoteBoardPresentationState: Equatable {
         return formatter
     }()
 
-    private static let timeFormatter: DateFormatter = {
+    private static let secondaryLineFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "en_US_POSIX")
         formatter.timeZone = .current
-        formatter.dateFormat = "h:mm:ss a"
+        formatter.dateFormat = "MM/dd HH:mm z"
         return formatter
     }()
 }
@@ -170,6 +211,7 @@ private struct QuoteBoardLayoutMetrics {
     let controlSpacing: CGFloat
     let statsSpacing: CGFloat
     let heroPriceFontSize: CGFloat
+    let statsColumnWidth: CGFloat
 
     static func make(for size: CGSize) -> QuoteBoardLayoutMetrics {
         let width = max(size.width, WindowStyler.minimumSize.width)
@@ -184,8 +226,9 @@ private struct QuoteBoardLayoutMetrics {
             contentVerticalPadding: 24 + (12 * progress),
             sectionSpacing: 22 + (10 * progress),
             controlSpacing: 14 + (8 * progress),
-            statsSpacing: 14 + (10 * progress),
-            heroPriceFontSize: 42 + (22 * progress)
+            statsSpacing: 10 + (4 * progress),
+            heroPriceFontSize: 42 + (22 * progress),
+            statsColumnWidth: 360 + (36 * progress)
         )
     }
 }
@@ -206,6 +249,7 @@ struct QuoteBoardView: View {
 
             GeometryReader { geometry in
                 let metrics = QuoteBoardLayoutMetrics.make(for: geometry.size)
+                let useStackedTerminalLayout = geometry.size.width < 780
 
                 ZStack {
                     QuoteBoardTheme.backgroundGradient
@@ -229,22 +273,11 @@ struct QuoteBoardView: View {
                             ConnectionBadgeView(state: presentation.connectionState)
                         }
 
-                        PriceHeaderView(
-                            content: presentation.header,
-                            heroPriceFontSize: metrics.heroPriceFontSize
+                        terminalBody(
+                            presentation: presentation,
+                            metrics: metrics,
+                            useStackedLayout: useStackedTerminalLayout
                         )
-
-                        StatsGridView(
-                            items: presentation.stats,
-                            horizontalSpacing: metrics.statsSpacing
-                        )
-
-                        if let lastSelectionError = presentation.lastSelectionError {
-                            Text(lastSelectionError)
-                                .font(QuoteBoardTheme.regularFont(size: 12))
-                                .foregroundStyle(QuoteBoardTheme.errorText)
-                                .lineLimit(2)
-                        }
                     }
                     .padding(.horizontal, metrics.contentHorizontalPadding)
                     .padding(.vertical, metrics.contentVerticalPadding)
@@ -267,5 +300,68 @@ struct QuoteBoardView: View {
             get: { viewModel.selectedPair },
             set: { viewModel.selectPair($0) }
         )
+    }
+
+    @ViewBuilder
+    private func terminalQuoteColumn(
+        presentation: QuoteBoardPresentationState,
+        metrics: QuoteBoardLayoutMetrics
+    ) -> some View {
+        VStack(alignment: .leading, spacing: metrics.sectionSpacing) {
+            PriceHeaderView(
+                content: presentation.header,
+                heroPriceFontSize: metrics.heroPriceFontSize
+            )
+        }
+    }
+
+    @ViewBuilder
+    private func terminalFieldsColumn(
+        presentation: QuoteBoardPresentationState,
+        metrics: QuoteBoardLayoutMetrics
+    ) -> some View {
+        StatsGridView(
+            items: presentation.stats,
+            spacing: metrics.statsSpacing,
+            numberOfColumns: 2
+        )
+        .frame(maxWidth: .infinity, alignment: .topLeading)
+    }
+
+    @ViewBuilder
+    private func terminalBody(
+        presentation: QuoteBoardPresentationState,
+        metrics: QuoteBoardLayoutMetrics,
+        useStackedLayout: Bool
+    ) -> some View {
+        VStack(alignment: .leading, spacing: metrics.sectionSpacing) {
+            if useStackedLayout {
+                VStack(alignment: .leading, spacing: metrics.sectionSpacing) {
+                    terminalQuoteColumn(
+                        presentation: presentation,
+                        metrics: metrics
+                    )
+
+                    terminalFieldsColumn(
+                        presentation: presentation,
+                        metrics: metrics
+                    )
+                }
+            } else {
+                HStack(alignment: .top, spacing: metrics.sectionSpacing) {
+                    terminalQuoteColumn(
+                        presentation: presentation,
+                        metrics: metrics
+                    )
+                    .frame(maxWidth: .infinity, alignment: .topLeading)
+
+                    terminalFieldsColumn(
+                        presentation: presentation,
+                        metrics: metrics
+                    )
+                    .frame(width: metrics.statsColumnWidth, alignment: .topLeading)
+                }
+            }
+        }
     }
 }

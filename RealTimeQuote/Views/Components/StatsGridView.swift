@@ -8,48 +8,36 @@ struct StatsGridView: View {
     }
 
     let items: [Item]
-    let horizontalSpacing: CGFloat
+    let spacing: CGFloat
+    let numberOfColumns: Int
 
     var body: some View {
-        ViewThatFits(in: .horizontal) {
-            HStack(spacing: horizontalSpacing) {
-                statCards
-            }
+        let columns = Array(
+            repeating: GridItem(.flexible(minimum: 110), spacing: spacing, alignment: .leading),
+            count: numberOfColumns
+        )
 
-            VStack(spacing: horizontalSpacing) {
-                statCards
+        LazyVGrid(columns: columns, alignment: .leading, spacing: spacing) {
+            ForEach(items, id: \.label) { item in
+                marketField(item: item)
             }
         }
     }
 
-    @ViewBuilder
-    private var statCards: some View {
-        ForEach(items, id: \.label) { item in
-            statCard(item: item)
-        }
-    }
-
-    private func statCard(item: Item) -> some View {
-        VStack(alignment: .leading, spacing: 10) {
+    private func marketField(item: Item) -> some View {
+        HStack(alignment: .firstTextBaseline, spacing: 10) {
             Text(item.label)
-                .font(QuoteBoardTheme.boldFont(size: 11))
-                .foregroundStyle(QuoteBoardTheme.tertiaryText)
+                .font(QuoteBoardTheme.regularFont(size: 12))
+                .foregroundStyle(QuoteBoardTheme.secondaryText)
+
+            Spacer(minLength: 6)
 
             Text(item.value)
-                .font(QuoteBoardTheme.regularFont(size: 18))
+                .font(QuoteBoardTheme.regularFont(size: 17))
                 .foregroundStyle(item.valueColor)
                 .lineLimit(1)
                 .minimumScaleFactor(0.8)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(16)
-        .background(
-            QuoteBoardTheme.panelFill,
-            in: RoundedRectangle(cornerRadius: QuoteBoardTheme.panelCornerRadius, style: .continuous)
-        )
-        .overlay(
-            RoundedRectangle(cornerRadius: QuoteBoardTheme.panelCornerRadius, style: .continuous)
-                .stroke(QuoteBoardTheme.panelStroke, lineWidth: 1)
-        )
     }
 }
