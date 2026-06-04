@@ -10,7 +10,7 @@ struct TradingPairPickerView: View {
                 .foregroundStyle(Color.white.opacity(0.72))
                 .textCase(.uppercase)
 
-            HStack(spacing: 10) {
+            HStack(spacing: 6) {
                 ForEach(TradingPair.allCases) { pair in
                     Button {
                         selection = pair
@@ -18,7 +18,7 @@ struct TradingPairPickerView: View {
                         Text(pair.displaySymbol)
                             .font(QuoteBoardTheme.regularFont(size: 13))
                             .foregroundStyle(pair == selection ? Color.white : QuoteBoardTheme.primaryText)
-                            .padding(.horizontal, 14)
+                            .frame(width: 78)
                             .padding(.vertical, 7)
                             .background(
                                 RoundedRectangle(cornerRadius: 8, style: .continuous)

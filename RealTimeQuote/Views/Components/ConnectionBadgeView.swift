@@ -20,6 +20,7 @@ struct ConnectionBadgeView: View {
             Capsule()
                 .stroke(badgeColor.opacity(0.4), lineWidth: 1)
         )
+        .fixedSize()
     }
 
     private var labelText: String {

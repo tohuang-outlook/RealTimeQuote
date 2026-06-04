@@ -3,6 +3,7 @@ import Foundation
 enum TradingPair: CaseIterable, Codable, Identifiable {
     case btcUSD
     case ethUSD
+    case adaUSD
     case solUSD
 
     var id: String { persistenceKey }
@@ -13,6 +14,8 @@ enum TradingPair: CaseIterable, Codable, Identifiable {
             return "btc_usd"
         case .ethUSD:
             return "eth_usd"
+        case .adaUSD:
+            return "ada_usd"
         case .solUSD:
             return "sol_usd"
         }
@@ -24,6 +27,8 @@ enum TradingPair: CaseIterable, Codable, Identifiable {
             return "BTC-USD"
         case .ethUSD:
             return "ETH-USD"
+        case .adaUSD:
+            return "ADA-USD"
         case .solUSD:
             return "SOL-USD"
         }
@@ -38,6 +43,8 @@ enum TradingPair: CaseIterable, Codable, Identifiable {
             self = .btcUSD
         case "eth_usd", "ETH-USD":
             self = .ethUSD
+        case "ada_usd", "ADA-USD":
+            self = .adaUSD
         case "sol_usd", "SOL-USD":
             self = .solUSD
         default:
