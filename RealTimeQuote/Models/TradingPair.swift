@@ -39,6 +39,21 @@ enum TradingPair: CaseIterable, Codable, Identifiable {
         }
     }
 
+    var pickerLabel: String {
+        switch self {
+        case .btcUSD:
+            return "BTC"
+        case .ethUSD:
+            return "ETH"
+        case .adaUSD:
+            return "ADA"
+        case .solUSD:
+            return "SOL"
+        case .xrpUSD:
+            return "XRP"
+        }
+    }
+
     var coinGeckoID: String {
         switch self {
         case .btcUSD:
