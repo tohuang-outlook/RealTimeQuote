@@ -55,6 +55,14 @@ final class OKXQuoteStream: ExchangeQuoteStreaming {
         lifecycleTask = Task { [weak self] in
             await self?.runLifecycle(startingWith: task, subscription: subscription)
         }
+
+        // OKX only pushes ticker messages after a market update, so seed the UI
+        // from its public REST ticker endpoint immediately after subscription.
+        if let snapshot = try? await loadInitialSnapshot(for: subscription),
+           activeSubscription == subscription,
+           !isStopped {
+            continuation?.yield(.didReceiveSnapshot(snapshot))
+        }
     }
 
     func stop() {
@@ -183,6 +191,40 @@ final class OKXQuoteStream: ExchangeQuoteStreaming {
         return envelope.quoteSnapshot(for: pair, exchange: exchange, connectionState: .live)
     }
 
+    private func loadInitialSnapshot(for subscription: Subscription) async throws -> QuoteSnapshot {
+        var components = URLComponents(string: "https://www.okx.com/api/v5/market/ticker")
+        components?.queryItems = [
+            URLQueryItem(name: "instId", value: subscription.pair.okxInstrumentID)
+        ]
+
+        guard let url = components?.url else {
+            throw InitialTickerError.invalidURL
+        }
+
+        let (data, response) = try await session.data(from: url)
+        guard let response = response as? HTTPURLResponse, 200..<300 ~= response.statusCode else {
+            throw InitialTickerError.invalidResponse
+        }
+
+        let payload = try decoder.decode(OKXMarketTickerResponse.self, from: data)
+        guard let ticker = payload.data.first else {
+            throw InitialTickerError.missingTicker
+        }
+
+        return QuoteSnapshot(
+            exchange: subscription.exchange,
+            pair: subscription.pair,
+            lastPrice: ticker.last,
+            absoluteChange: ticker.absoluteChange24h,
+            percentChange: ticker.percentChange24h,
+            high24h: ticker.high24h,
+            low24h: ticker.low24h,
+            volume24h: ticker.vol24h,
+            updatedAt: ticker.timestamp,
+            connectionState: .live
+        )
+    }
+
     private static func connectionIssue(for error: Error, task: URLSessionWebSocketTask?) -> ConnectionIssue {
         let nsError = error as NSError
         if nsError.domain == NSURLErrorDomain {
@@ -203,4 +245,14 @@ final class OKXQuoteStream: ExchangeQuoteStreaming {
         let exchange: ExchangeID
         let pair: TradingPair
     }
+
+    private enum InitialTickerError: Error {
+        case invalidURL
+        case invalidResponse
+        case missingTicker
+    }
+}
+
+private struct OKXMarketTickerResponse: Decodable {
+    let data: [OKXTickerEnvelope.Ticker]
 }

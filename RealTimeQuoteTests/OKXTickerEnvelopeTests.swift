@@ -8,12 +8,12 @@ final class OKXTickerEnvelopeTests: XCTestCase {
             {
               "arg": {
                 "channel": "tickers",
-                "instId": "BTC-USD"
+                "instId": "BTC-USDT"
               },
               "data": [
                 {
                   "instType": "SPOT",
-                  "instId": "BTC-USD",
+                  "instId": "BTC-USDT",
                   "last": "64215.7",
                   "lastSz": "0.01807331",
                   "askPx": "64215.8",
@@ -59,7 +59,7 @@ final class OKXTickerEnvelopeTests: XCTestCase {
               "event": "subscribe",
               "arg": {
                 "channel": "tickers",
-                "instId": "BTC-USD"
+                "instId": "BTC-USDT"
               },
               "connId": "a4d3ae55"
             }

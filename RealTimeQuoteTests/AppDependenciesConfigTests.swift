@@ -7,7 +7,8 @@ final class AppDependenciesConfigTests: XCTestCase {
         let config = RuntimeConfig(
             defaults: .init(exchange: .okx, pair: .ethUSD, enabledExchanges: [.coinbase, .okx]),
             coinbase: nil,
-            okx: nil
+            okx: nil,
+            coinGecko: nil
         )
 
         let resolved = AppBootstrapSelectionResolver.resolve(
@@ -24,7 +25,8 @@ final class AppDependenciesConfigTests: XCTestCase {
         let config = RuntimeConfig(
             defaults: .init(exchange: .coinbase, pair: .btcUSD, enabledExchanges: [.coinbase]),
             coinbase: nil,
-            okx: nil
+            okx: nil,
+            coinGecko: nil
         )
 
         let resolved = AppBootstrapSelectionResolver.resolve(

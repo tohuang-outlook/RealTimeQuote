@@ -55,7 +55,25 @@ enum TradingPair: CaseIterable, Codable, Identifiable {
     }
 
     var coinbaseProductID: String { displaySymbol }
-    var okxInstrumentID: String { displaySymbol }
+
+    var okxInstrumentID: String {
+        switch self {
+        case .btcUSD:
+            return "BTC-USDT"
+        case .ethUSD:
+            return "ETH-USDT"
+        case .adaUSD:
+            return "ADA-USDT"
+        case .solUSD:
+            return "SOL-USDT"
+        case .xrpUSD:
+            return "XRP-USDT"
+        }
+    }
+
+    func displaySymbol(for exchange: ExchangeID) -> String {
+        exchange == .okx ? okxInstrumentID : displaySymbol
+    }
 
     init?(persistenceKey: String) {
         switch persistenceKey {
