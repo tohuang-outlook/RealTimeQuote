@@ -14,6 +14,14 @@ final class TradingPairTests: XCTestCase {
         XCTAssertEqual(TradingPair.btcUSD.okxInstrumentID, "BTC-USD")
     }
 
+    func testXRPTradingPairUsesExchangeAndReferenceDataMappings() {
+        XCTAssertEqual(TradingPair.xrpUSD.id, "xrp_usd")
+        XCTAssertEqual(TradingPair.xrpUSD.displaySymbol, "XRP-USD")
+        XCTAssertEqual(TradingPair.xrpUSD.coinbaseProductID, "XRP-USD")
+        XCTAssertEqual(TradingPair.xrpUSD.okxInstrumentID, "XRP-USD")
+        XCTAssertEqual(TradingPair.xrpUSD.coinGeckoID, "ripple")
+    }
+
     func testTradingPairCodableUsesCanonicalPersistenceValue() throws {
         let encoded = try JSONEncoder().encode(TradingPair.btcUSD)
         let decoded = try JSONDecoder().decode(TradingPair.self, from: encoded)
