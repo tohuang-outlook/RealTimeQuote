@@ -6,6 +6,7 @@ enum TradingPair: CaseIterable, Codable, Identifiable {
     case adaUSD
     case solUSD
     case xrpUSD
+    case dogeUSD
 
     var id: String { persistenceKey }
 
@@ -21,6 +22,8 @@ enum TradingPair: CaseIterable, Codable, Identifiable {
             return "sol_usd"
         case .xrpUSD:
             return "xrp_usd"
+        case .dogeUSD:
+            return "doge_usd"
         }
     }
 
@@ -36,6 +39,8 @@ enum TradingPair: CaseIterable, Codable, Identifiable {
             return "SOL-USD"
         case .xrpUSD:
             return "XRP-USD"
+        case .dogeUSD:
+            return "DOGE-USD"
         }
     }
 
@@ -51,6 +56,8 @@ enum TradingPair: CaseIterable, Codable, Identifiable {
             return "SOL"
         case .xrpUSD:
             return "XRP"
+        case .dogeUSD:
+            return "DOGE"
         }
     }
 
@@ -66,6 +73,8 @@ enum TradingPair: CaseIterable, Codable, Identifiable {
             return "solana"
         case .xrpUSD:
             return "ripple"
+        case .dogeUSD:
+            return "dogecoin"
         }
     }
 
@@ -83,6 +92,8 @@ enum TradingPair: CaseIterable, Codable, Identifiable {
             return "SOL-USDT"
         case .xrpUSD:
             return "XRP-USDT"
+        case .dogeUSD:
+            return "DOGE-USDT"
         }
     }
 
@@ -102,6 +113,8 @@ enum TradingPair: CaseIterable, Codable, Identifiable {
             self = .solUSD
         case "xrp_usd", "XRP-USD":
             self = .xrpUSD
+        case "doge_usd", "DOGE-USD":
+            self = .dogeUSD
         default:
             return nil
         }
