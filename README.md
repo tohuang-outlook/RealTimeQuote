@@ -5,7 +5,7 @@ prices from Coinbase and OKX. It supports BTC, ETH, ADA, SOL, and XRP.
 
 ## Install
 
-1. Download and unzip `RealTimeQuote-1.0.1-macos.zip`.
+1. Download and unzip `RealTimeQuote-1.0.2-macos.zip`.
 2. Drag `RealTimeQuote.app` to `/Applications` or another permanent folder.
 3. Open the app. If macOS warns because the app is not notarized yet, use
    Control-click, choose **Open**, then confirm **Open**.

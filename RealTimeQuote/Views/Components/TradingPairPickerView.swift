@@ -15,10 +15,10 @@ struct TradingPairPickerView: View {
                     Button {
                         selection = pair
                     } label: {
-                        Text(pair.displaySymbol)
+                        Text(pair.pickerLabel)
                             .font(QuoteBoardTheme.regularFont(size: 13))
                             .foregroundStyle(pair == selection ? Color.white : QuoteBoardTheme.primaryText)
-                            .frame(width: 70)
+                            .frame(width: 54)
                             .padding(.vertical, 7)
                             .background(
                                 RoundedRectangle(cornerRadius: 8, style: .continuous)

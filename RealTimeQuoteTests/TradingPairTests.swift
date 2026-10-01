@@ -10,6 +10,7 @@ final class TradingPairTests: XCTestCase {
     func testTradingPairUsesStablePersistenceAndDisplayIdentity() {
         XCTAssertEqual(TradingPair.btcUSD.id, "btc_usd")
         XCTAssertEqual(TradingPair.btcUSD.displaySymbol, "BTC-USD")
+        XCTAssertEqual(TradingPair.btcUSD.pickerLabel, "BTC")
         XCTAssertEqual(TradingPair.btcUSD.coinbaseProductID, "BTC-USD")
         XCTAssertEqual(TradingPair.btcUSD.okxInstrumentID, "BTC-USDT")
     }
@@ -17,6 +18,7 @@ final class TradingPairTests: XCTestCase {
     func testXRPTradingPairUsesExchangeAndReferenceDataMappings() {
         XCTAssertEqual(TradingPair.xrpUSD.id, "xrp_usd")
         XCTAssertEqual(TradingPair.xrpUSD.displaySymbol, "XRP-USD")
+        XCTAssertEqual(TradingPair.xrpUSD.pickerLabel, "XRP")
         XCTAssertEqual(TradingPair.xrpUSD.coinbaseProductID, "XRP-USD")
         XCTAssertEqual(TradingPair.xrpUSD.okxInstrumentID, "XRP-USDT")
         XCTAssertEqual(TradingPair.xrpUSD.coinGeckoID, "ripple")
