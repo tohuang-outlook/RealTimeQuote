@@ -102,7 +102,7 @@ private extension KeyedDecodingContainer {
     }
 }
 
-private extension OKXTickerEnvelope.Ticker {
+extension OKXTickerEnvelope.Ticker {
     var absoluteChange24h: Decimal? {
         guard let last, let open24h else { return nil }
         return last - open24h

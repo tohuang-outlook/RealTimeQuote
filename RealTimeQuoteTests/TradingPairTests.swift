@@ -3,15 +3,28 @@ import XCTest
 
 final class TradingPairTests: XCTestCase {
     func testOKXInstrumentMappingUsesHyphenatedSpotSymbol() {
-        XCTAssertEqual(TradingPair.btcUSD.okxInstrumentID, "BTC-USD")
-        XCTAssertEqual(TradingPair.ethUSD.okxInstrumentID, "ETH-USD")
+        XCTAssertEqual(TradingPair.btcUSD.okxInstrumentID, "BTC-USDT")
+        XCTAssertEqual(TradingPair.ethUSD.okxInstrumentID, "ETH-USDT")
     }
 
     func testTradingPairUsesStablePersistenceAndDisplayIdentity() {
         XCTAssertEqual(TradingPair.btcUSD.id, "btc_usd")
         XCTAssertEqual(TradingPair.btcUSD.displaySymbol, "BTC-USD")
         XCTAssertEqual(TradingPair.btcUSD.coinbaseProductID, "BTC-USD")
-        XCTAssertEqual(TradingPair.btcUSD.okxInstrumentID, "BTC-USD")
+        XCTAssertEqual(TradingPair.btcUSD.okxInstrumentID, "BTC-USDT")
+    }
+
+    func testXRPTradingPairUsesExchangeAndReferenceDataMappings() {
+        XCTAssertEqual(TradingPair.xrpUSD.id, "xrp_usd")
+        XCTAssertEqual(TradingPair.xrpUSD.displaySymbol, "XRP-USD")
+        XCTAssertEqual(TradingPair.xrpUSD.coinbaseProductID, "XRP-USD")
+        XCTAssertEqual(TradingPair.xrpUSD.okxInstrumentID, "XRP-USDT")
+        XCTAssertEqual(TradingPair.xrpUSD.coinGeckoID, "ripple")
+    }
+
+    func testDisplaySymbolUsesTheSelectedExchangeConvention() {
+        XCTAssertEqual(TradingPair.btcUSD.displaySymbol(for: .coinbase), "BTC-USD")
+        XCTAssertEqual(TradingPair.btcUSD.displaySymbol(for: .okx), "BTC-USDT")
     }
 
     func testTradingPairCodableUsesCanonicalPersistenceValue() throws {

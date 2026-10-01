@@ -25,6 +25,7 @@ final class QuoteBoardPresentationStateTests: XCTestCase {
                 week52Low: nil,
                 marketCap: nil
             ),
+            referenceStats: .empty,
             lastSelectionError: "ignored"
         )
 

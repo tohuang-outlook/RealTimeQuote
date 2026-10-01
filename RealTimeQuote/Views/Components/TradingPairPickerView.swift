@@ -18,7 +18,7 @@ struct TradingPairPickerView: View {
                         Text(pair.displaySymbol)
                             .font(QuoteBoardTheme.regularFont(size: 13))
                             .foregroundStyle(pair == selection ? Color.white : QuoteBoardTheme.primaryText)
-                            .frame(width: 78)
+                            .frame(width: 70)
                             .padding(.vertical, 7)
                             .background(
                                 RoundedRectangle(cornerRadius: 8, style: .continuous)
