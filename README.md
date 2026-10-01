@@ -1,7 +1,7 @@
 # Real Time Quote
 
 Real Time Quote is a native macOS menu-style window for live cryptocurrency
-prices from Coinbase and OKX. It supports BTC, ETH, ADA, SOL, and XRP.
+prices from Coinbase and OKX. It supports BTC, ETH, ADA, SOL, XRP, and DOGE.
 
 ## Install
 
@@ -18,7 +18,7 @@ without API credentials.
 Coinbase uses USD pairs, such as `BTC-USD` and `ETH-USD`.
 
 OKX spot markets use USDT pairs, so the app intentionally displays
-`BTC-USDT`, `ETH-USDT`, `ADA-USDT`, `SOL-USDT`, or `XRP-USDT` while OKX is
+`BTC-USDT`, `ETH-USDT`, `ADA-USDT`, `SOL-USDT`, `XRP-USDT`, or `DOGE-USDT` while OKX is
 selected. This avoids requesting non-existent `*-USD` markets from OKX.
 
 ## Optional configuration

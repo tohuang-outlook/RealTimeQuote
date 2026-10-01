@@ -24,6 +24,15 @@ final class TradingPairTests: XCTestCase {
         XCTAssertEqual(TradingPair.xrpUSD.coinGeckoID, "ripple")
     }
 
+    func testDOGETradingPairUsesExchangeAndReferenceDataMappings() {
+        XCTAssertEqual(TradingPair.dogeUSD.id, "doge_usd")
+        XCTAssertEqual(TradingPair.dogeUSD.displaySymbol, "DOGE-USD")
+        XCTAssertEqual(TradingPair.dogeUSD.pickerLabel, "DOGE")
+        XCTAssertEqual(TradingPair.dogeUSD.coinbaseProductID, "DOGE-USD")
+        XCTAssertEqual(TradingPair.dogeUSD.okxInstrumentID, "DOGE-USDT")
+        XCTAssertEqual(TradingPair.dogeUSD.coinGeckoID, "dogecoin")
+    }
+
     func testDisplaySymbolUsesTheSelectedExchangeConvention() {
         XCTAssertEqual(TradingPair.btcUSD.displaySymbol(for: .coinbase), "BTC-USD")
         XCTAssertEqual(TradingPair.btcUSD.displaySymbol(for: .okx), "BTC-USDT")
