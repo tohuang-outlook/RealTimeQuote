@@ -40,8 +40,48 @@ struct RuntimeConfig: Decodable, Equatable {
         }
     }
 
+    struct GoogleMaps: Decodable, Equatable {
+        let apiKey: String?
+        let mapId: String?
+    }
+
     let defaults: Defaults?
     let coinbase: Coinbase?
     let okx: OKX?
     let coinGecko: CoinGecko?
+    let googleMaps: GoogleMaps?
+
+    init(
+        defaults: Defaults?,
+        coinbase: Coinbase?,
+        okx: OKX?,
+        coinGecko: CoinGecko?,
+        googleMaps: GoogleMaps? = nil
+    ) {
+        self.defaults = defaults
+        self.coinbase = coinbase
+        self.okx = okx
+        self.coinGecko = coinGecko
+        self.googleMaps = googleMaps
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case defaults
+        case coinbase
+        case okx
+        case coinGecko
+        case googleMaps
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        // Each integration is optional. A stale quote-provider setting must not
+        // prevent Travel Map from loading an otherwise valid Google Maps key.
+        defaults = try? container.decodeIfPresent(Defaults.self, forKey: .defaults)
+        coinbase = try? container.decodeIfPresent(Coinbase.self, forKey: .coinbase)
+        okx = try? container.decodeIfPresent(OKX.self, forKey: .okx)
+        coinGecko = try? container.decodeIfPresent(CoinGecko.self, forKey: .coinGecko)
+        googleMaps = try? container.decodeIfPresent(GoogleMaps.self, forKey: .googleMaps)
+    }
 }

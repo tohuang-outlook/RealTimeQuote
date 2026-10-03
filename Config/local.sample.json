@@ -19,5 +19,9 @@
   "coinGecko": {
     "apiKey": "your-coingecko-demo-or-pro-key",
     "useProAPI": false
+  },
+  "googleMaps": {
+    "apiKey": "your-google-maps-javascript-api-key",
+    "mapId": "your-google-maps-javascript-map-id"
   }
 }

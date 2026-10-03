@@ -13,7 +13,7 @@ struct QuoteSnapshot: Equatable {
     let connectionState: ConnectionState
 
     var displaySymbol: String {
-        pair.displaySymbol(for: exchange)
+        pair.displaySymbol
     }
 
     static func placeholder(for pair: TradingPair, exchange: ExchangeID) -> QuoteSnapshot {

@@ -6,7 +6,6 @@ enum TradingPair: CaseIterable, Codable, Identifiable {
     case adaUSD
     case solUSD
     case xrpUSD
-    case dogeUSD
 
     var id: String { persistenceKey }
 
@@ -22,8 +21,6 @@ enum TradingPair: CaseIterable, Codable, Identifiable {
             return "sol_usd"
         case .xrpUSD:
             return "xrp_usd"
-        case .dogeUSD:
-            return "doge_usd"
         }
     }
 
@@ -39,25 +36,6 @@ enum TradingPair: CaseIterable, Codable, Identifiable {
             return "SOL-USD"
         case .xrpUSD:
             return "XRP-USD"
-        case .dogeUSD:
-            return "DOGE-USD"
-        }
-    }
-
-    var pickerLabel: String {
-        switch self {
-        case .btcUSD:
-            return "BTC"
-        case .ethUSD:
-            return "ETH"
-        case .adaUSD:
-            return "ADA"
-        case .solUSD:
-            return "SOL"
-        case .xrpUSD:
-            return "XRP"
-        case .dogeUSD:
-            return "DOGE"
         }
     }
 
@@ -73,33 +51,11 @@ enum TradingPair: CaseIterable, Codable, Identifiable {
             return "solana"
         case .xrpUSD:
             return "ripple"
-        case .dogeUSD:
-            return "dogecoin"
         }
     }
 
     var coinbaseProductID: String { displaySymbol }
-
-    var okxInstrumentID: String {
-        switch self {
-        case .btcUSD:
-            return "BTC-USDT"
-        case .ethUSD:
-            return "ETH-USDT"
-        case .adaUSD:
-            return "ADA-USDT"
-        case .solUSD:
-            return "SOL-USDT"
-        case .xrpUSD:
-            return "XRP-USDT"
-        case .dogeUSD:
-            return "DOGE-USDT"
-        }
-    }
-
-    func displaySymbol(for exchange: ExchangeID) -> String {
-        exchange == .okx ? okxInstrumentID : displaySymbol
-    }
+    var okxInstrumentID: String { displaySymbol }
 
     init?(persistenceKey: String) {
         switch persistenceKey {
@@ -113,8 +69,6 @@ enum TradingPair: CaseIterable, Codable, Identifiable {
             self = .solUSD
         case "xrp_usd", "XRP-USD":
             self = .xrpUSD
-        case "doge_usd", "DOGE-USD":
-            self = .dogeUSD
         default:
             return nil
         }

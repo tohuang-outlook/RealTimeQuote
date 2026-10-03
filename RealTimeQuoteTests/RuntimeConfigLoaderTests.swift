@@ -22,6 +22,10 @@ final class RuntimeConfigLoaderTests: XCTestCase {
                 "apiSecret": "okx-secret",
                 "passphrase": "okx-pass",
                 "useAuthenticatedFeed": false
+              },
+              "googleMaps": {
+                "apiKey": "maps-key",
+                "mapId": "map-id"
               }
             }
             """#.utf8
@@ -36,6 +40,8 @@ final class RuntimeConfigLoaderTests: XCTestCase {
         XCTAssertEqual(config.coinbase?.useAuthenticatedFeed, true)
         XCTAssertEqual(config.okx?.apiSecret, "okx-secret")
         XCTAssertEqual(config.okx?.useAuthenticatedFeed, false)
+        XCTAssertEqual(config.googleMaps?.apiKey, "maps-key")
+        XCTAssertEqual(config.googleMaps?.mapId, "map-id")
     }
 
     func test_runtimeConfig_decodesWithoutOptionalCredentialBlocks() throws {

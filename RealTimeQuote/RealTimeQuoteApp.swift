@@ -1,29 +1,20 @@
 import SwiftUI
 
 @main
-struct RealTimeQuoteApp: App {
-    @StateObject private var dependencies = AppDependencies.live()
-
+struct TravelMapApp: App {
     var body: some Scene {
-        WindowGroup("Real Time Quote") {
-            QuoteBoardWindowRootView(makeViewModel: dependencies.makeQuoteBoardViewModel)
+        WindowGroup("Y Companion") {
+            TripPlannerRootView()
         }
         .windowStyle(.hiddenTitleBar)
-        .windowResizability(.contentSize)
-        .defaultSize(width: WindowStyler.defaultSize.width, height: WindowStyler.defaultSize.height)
+        .defaultSize(width: 1320, height: 860)
     }
 }
 
-private struct QuoteBoardWindowRootView: View {
-    @StateObject private var viewModel: QuoteBoardViewModel
-
-    init(makeViewModel: @escaping @MainActor () -> QuoteBoardViewModel) {
-        _viewModel = StateObject(wrappedValue: makeViewModel())
-    }
-
+private struct TripPlannerRootView: View {
     var body: some View {
-        WindowStyler.makeRootView {
-            QuoteBoardView(viewModel: viewModel)
+        WindowStyler.makePlannerRootView {
+            TripPlannerView()
         }
     }
 }

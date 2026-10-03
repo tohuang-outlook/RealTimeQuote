@@ -38,6 +38,34 @@
 		A00000000000000000000160 /* ReferenceStatsSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000161 /* ReferenceStatsSnapshot.swift */; };
 		A00000000000000000000162 /* ReferenceStatsLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000163 /* ReferenceStatsLoading.swift */; };
 		A00000000000000000000164 /* CoinGeckoReferenceStatsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000165 /* CoinGeckoReferenceStatsLoader.swift */; };
+		A00000000000000000000167 /* TripTransportType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000168 /* TripTransportType.swift */; };
+		A00000000000000000000169 /* TripSegmentInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000016A /* TripSegmentInput.swift */; };
+		A0000000000000000000016B /* ResolvedTripSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000016C /* ResolvedTripSegment.swift */; };
+		A0000000000000000000016D /* RoutePreviewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000016E /* RoutePreviewState.swift */; };
+		A0000000000000000000016F /* TripPlannerPresentationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000170 /* TripPlannerPresentationTests.swift */; };
+		A00000000000000000000171 /* DefaultTripRouteResolverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000172 /* DefaultTripRouteResolverTests.swift */; };
+		A00000000000000000000173 /* CityResolving.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000174 /* CityResolving.swift */; };
+		A00000000000000000000175 /* StaticCityResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000176 /* StaticCityResolver.swift */; };
+		A00000000000000000000177 /* TripRouteResolving.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000178 /* TripRouteResolving.swift */; };
+		A00000000000000000000179 /* DefaultTripRouteResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000017A /* DefaultTripRouteResolver.swift */; };
+		A00000000000000000000180 /* TripPlannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000181 /* TripPlannerViewModel.swift */; };
+		A00000000000000000000182 /* RouteVideoExporting.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000183 /* RouteVideoExporting.swift */; };
+		A00000000000000000000184 /* StubRouteVideoExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000185 /* StubRouteVideoExporter.swift */; };
+		A00000000000000000000186 /* TripPlannerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000187 /* TripPlannerViewModelTests.swift */; };
+		A000000000000000000001A3 /* RouteVideoExportError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A000000000000000000001A4 /* RouteVideoExportError.swift */; };
+		A000000000000000000001A5 /* RouteVideoExportConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A000000000000000000001A6 /* RouteVideoExportConfiguration.swift */; };
+		A000000000000000000001AB /* RouteVideoRendererHosting.swift in Sources */ = {isa = PBXBuildFile; fileRef = A000000000000000000001AC /* RouteVideoRendererHosting.swift */; };
+		A000000000000000000001AD /* RouteVideoFrameWriting.swift in Sources */ = {isa = PBXBuildFile; fileRef = A000000000000000000001AE /* RouteVideoFrameWriting.swift */; };
+		A000000000000000000001AF /* RealRouteVideoExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A000000000000000000001B0 /* RealRouteVideoExporter.swift */; };
+		A000000000000000000001B3 /* WebKitRouteVideoRendererHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = A000000000000000000001B4 /* WebKitRouteVideoRendererHost.swift */; };
+		A000000000000000000001B5 /* AVAssetRouteVideoFrameWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A000000000000000000001B6 /* AVAssetRouteVideoFrameWriter.swift */; };
+		A000000000000000000001B9 /* FallbackRouteVideoExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A000000000000000000001BC /* FallbackRouteVideoExporter.swift */; };
+		A000000000000000000001BA /* FFmpegRouteVideoExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A000000000000000000001BD /* FFmpegRouteVideoExporter.swift */; };
+		A00000000000000000000189 /* TripPlannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000018A /* TripPlannerView.swift */; };
+		A0000000000000000000018B /* TripSegmentRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000018C /* TripSegmentRowView.swift */; };
+		A0000000000000000000018D /* RoutePreviewPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000018E /* RoutePreviewPanel.swift */; };
+		A0000000000000000000018F /* RendererStatusBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000190 /* RendererStatusBadge.swift */; };
+		A000000000000000000001A9 /* RouteVideoTimeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = A000000000000000000001AA /* RouteVideoTimeline.swift */; };
 		A00000000000000000000122 /* TradingPairPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000123 /* TradingPairPickerView.swift */; };
 		A00000000000000000000124 /* PriceHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000125 /* PriceHeaderView.swift */; };
 		A00000000000000000000126 /* StatsGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000127 /* StatsGridView.swift */; };
@@ -48,6 +76,18 @@
 		A00000000000000000000144 /* RuntimeConfigSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000145 /* RuntimeConfigSource.swift */; };
 		A00000000000000000000147 /* RuntimeConfigLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000148 /* RuntimeConfigLoader.swift */; };
 		A00000000000000000000149 /* AppDependenciesConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000014A /* AppDependenciesConfigTests.swift */; };
+		A00000000000000000000191 /* RoutePreviewWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000192 /* RoutePreviewWebView.swift */; };
+		A00000000000000000000193 /* RoutePreviewHTMLBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000194 /* RoutePreviewHTMLBuilder.swift */; };
+		A00000000000000000000195 /* route-preview.html in Resources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000196 /* route-preview.html */; };
+		A00000000000000000000197 /* route-preview.js in Resources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000198 /* route-preview.js */; };
+		A0000000000000000000019D /* RoutePreviewRendererEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000019E /* RoutePreviewRendererEvent.swift */; };
+		A0000000000000000000019F /* RoutePreviewBridgeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A000000000000000000001A0 /* RoutePreviewBridgeTests.swift */; };
+		A000000000000000000001A1 /* route-preview.css in Resources */ = {isa = PBXBuildFile; fileRef = A000000000000000000001A2 /* route-preview.css */; };
+		A000000000000000000001A7 /* RouteVideoTimelineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A000000000000000000001A8 /* RouteVideoTimelineTests.swift */; };
+		A000000000000000000001B1 /* RealRouteVideoExporterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A000000000000000000001B2 /* RealRouteVideoExporterTests.swift */; };
+		A000000000000000000001B7 /* AVAssetRouteVideoFrameWriterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A000000000000000000001B8 /* AVAssetRouteVideoFrameWriterTests.swift */; };
+		A000000000000000000001BB /* FallbackRouteVideoExporterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A000000000000000000001BE /* FallbackRouteVideoExporterTests.swift */; };
+		A000000000000000000001BF /* trip-location-dataset.json in Resources */ = {isa = PBXBuildFile; fileRef = A000000000000000000001C0 /* trip-location-dataset.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,6 +131,34 @@
 		A00000000000000000000161 /* ReferenceStatsSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReferenceStatsSnapshot.swift; sourceTree = "<group>"; };
 		A00000000000000000000163 /* ReferenceStatsLoading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReferenceStatsLoading.swift; sourceTree = "<group>"; };
 		A00000000000000000000165 /* CoinGeckoReferenceStatsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinGeckoReferenceStatsLoader.swift; sourceTree = "<group>"; };
+		A00000000000000000000168 /* TripTransportType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripTransportType.swift; sourceTree = "<group>"; };
+		A0000000000000000000016A /* TripSegmentInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripSegmentInput.swift; sourceTree = "<group>"; };
+		A0000000000000000000016C /* ResolvedTripSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResolvedTripSegment.swift; sourceTree = "<group>"; };
+		A0000000000000000000016E /* RoutePreviewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePreviewState.swift; sourceTree = "<group>"; };
+		A00000000000000000000170 /* TripPlannerPresentationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripPlannerPresentationTests.swift; sourceTree = "<group>"; };
+		A00000000000000000000172 /* DefaultTripRouteResolverTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTripRouteResolverTests.swift; sourceTree = "<group>"; };
+		A00000000000000000000174 /* CityResolving.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityResolving.swift; sourceTree = "<group>"; };
+		A00000000000000000000176 /* StaticCityResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticCityResolver.swift; sourceTree = "<group>"; };
+		A00000000000000000000178 /* TripRouteResolving.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripRouteResolving.swift; sourceTree = "<group>"; };
+		A0000000000000000000017A /* DefaultTripRouteResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTripRouteResolver.swift; sourceTree = "<group>"; };
+		A00000000000000000000181 /* TripPlannerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripPlannerViewModel.swift; sourceTree = "<group>"; };
+		A00000000000000000000183 /* RouteVideoExporting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteVideoExporting.swift; sourceTree = "<group>"; };
+		A00000000000000000000185 /* StubRouteVideoExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubRouteVideoExporter.swift; sourceTree = "<group>"; };
+		A00000000000000000000187 /* TripPlannerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripPlannerViewModelTests.swift; sourceTree = "<group>"; };
+		A000000000000000000001A4 /* RouteVideoExportError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteVideoExportError.swift; sourceTree = "<group>"; };
+		A000000000000000000001A6 /* RouteVideoExportConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteVideoExportConfiguration.swift; sourceTree = "<group>"; };
+		A000000000000000000001AC /* RouteVideoRendererHosting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteVideoRendererHosting.swift; sourceTree = "<group>"; };
+		A000000000000000000001AE /* RouteVideoFrameWriting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteVideoFrameWriting.swift; sourceTree = "<group>"; };
+		A000000000000000000001B0 /* RealRouteVideoExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealRouteVideoExporter.swift; sourceTree = "<group>"; };
+		A000000000000000000001B4 /* WebKitRouteVideoRendererHost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebKitRouteVideoRendererHost.swift; sourceTree = "<group>"; };
+		A000000000000000000001B6 /* AVAssetRouteVideoFrameWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVAssetRouteVideoFrameWriter.swift; sourceTree = "<group>"; };
+		A000000000000000000001BC /* FallbackRouteVideoExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FallbackRouteVideoExporter.swift; sourceTree = "<group>"; };
+		A000000000000000000001BD /* FFmpegRouteVideoExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FFmpegRouteVideoExporter.swift; sourceTree = "<group>"; };
+		A000000000000000000001AA /* RouteVideoTimeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteVideoTimeline.swift; sourceTree = "<group>"; };
+		A0000000000000000000018A /* TripPlannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripPlannerView.swift; sourceTree = "<group>"; };
+		A0000000000000000000018C /* TripSegmentRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripSegmentRowView.swift; sourceTree = "<group>"; };
+		A0000000000000000000018E /* RoutePreviewPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePreviewPanel.swift; sourceTree = "<group>"; };
+		A00000000000000000000190 /* RendererStatusBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererStatusBadge.swift; sourceTree = "<group>"; };
 		A00000000000000000000123 /* TradingPairPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradingPairPickerView.swift; sourceTree = "<group>"; };
 		A00000000000000000000125 /* PriceHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceHeaderView.swift; sourceTree = "<group>"; };
 		A00000000000000000000127 /* StatsGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsGridView.swift; sourceTree = "<group>"; };
@@ -101,9 +169,21 @@
 		A00000000000000000000145 /* RuntimeConfigSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntimeConfigSource.swift; sourceTree = "<group>"; };
 		A00000000000000000000148 /* RuntimeConfigLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntimeConfigLoader.swift; sourceTree = "<group>"; };
 		A0000000000000000000014A /* AppDependenciesConfigTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDependenciesConfigTests.swift; sourceTree = "<group>"; };
-		A00000000000000000000022 /* RealTimeQuote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RealTimeQuote.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A00000000000000000000022 /* YCompanion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YCompanion.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A00000000000000000000023 /* RealTimeQuoteTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RealTimeQuoteTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A00000000000000000000031 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/MacOSX.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		A00000000000000000000192 /* RoutePreviewWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePreviewWebView.swift; sourceTree = "<group>"; };
+		A00000000000000000000194 /* RoutePreviewHTMLBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePreviewHTMLBuilder.swift; sourceTree = "<group>"; };
+		A00000000000000000000196 /* route-preview.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "route-preview.html"; sourceTree = "<group>"; };
+		A00000000000000000000198 /* route-preview.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "route-preview.js"; sourceTree = "<group>"; };
+		A0000000000000000000019E /* RoutePreviewRendererEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePreviewRendererEvent.swift; sourceTree = "<group>"; };
+		A000000000000000000001A0 /* RoutePreviewBridgeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePreviewBridgeTests.swift; sourceTree = "<group>"; };
+		A000000000000000000001A2 /* route-preview.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = "route-preview.css"; sourceTree = "<group>"; };
+		A000000000000000000001A8 /* RouteVideoTimelineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteVideoTimelineTests.swift; sourceTree = "<group>"; };
+		A000000000000000000001B2 /* RealRouteVideoExporterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealRouteVideoExporterTests.swift; sourceTree = "<group>"; };
+		A000000000000000000001B8 /* AVAssetRouteVideoFrameWriterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVAssetRouteVideoFrameWriterTests.swift; sourceTree = "<group>"; };
+		A000000000000000000001BE /* FallbackRouteVideoExporterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FallbackRouteVideoExporterTests.swift; sourceTree = "<group>"; };
+		A000000000000000000001C0 /* trip-location-dataset.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "trip-location-dataset.json"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,6 +222,7 @@
 				A00000000000000000000065 /* App */,
 				A00000000000000000000146 /* Config */,
 				A00000000000000000000068 /* Models */,
+				A00000000000000000000199 /* Resources */,
 				A00000000000000000000069 /* Services */,
 				A0000000000000000000006A /* ViewModels */,
 				A00000000000000000000066 /* Views */,
@@ -164,6 +245,7 @@
 			children = (
 				A0000000000000000000012A /* Components */,
 				A00000000000000000000026 /* QuoteBoardView.swift */,
+				A0000000000000000000018A /* TripPlannerView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -174,8 +256,13 @@
 				A00000000000000000000129 /* ConnectionBadgeView.swift */,
 				A00000000000000000000121 /* ExchangePickerView.swift */,
 				A00000000000000000000125 /* PriceHeaderView.swift */,
+				A00000000000000000000190 /* RendererStatusBadge.swift */,
+				A0000000000000000000018E /* RoutePreviewPanel.swift */,
+				A0000000000000000000019A /* RendererBridge */,
+				A00000000000000000000192 /* RoutePreviewWebView.swift */,
 				A00000000000000000000127 /* StatsGridView.swift */,
 				A00000000000000000000123 /* TradingPairPickerView.swift */,
+				A0000000000000000000018C /* TripSegmentRowView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -190,14 +277,49 @@
 			path = Config;
 			sourceTree = "<group>";
 		};
+		A00000000000000000000199 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A0000000000000000000019B /* RoutePreview */,
+				A000000000000000000001C0 /* trip-location-dataset.json */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		A0000000000000000000019B /* RoutePreview */ = {
+			isa = PBXGroup;
+			children = (
+				A000000000000000000001A2 /* route-preview.css */,
+				A00000000000000000000196 /* route-preview.html */,
+				A00000000000000000000198 /* route-preview.js */,
+			);
+			path = RoutePreview;
+			sourceTree = "<group>";
+		};
+		A0000000000000000000019A /* RendererBridge */ = {
+			isa = PBXGroup;
+			children = (
+				A00000000000000000000194 /* RoutePreviewHTMLBuilder.swift */,
+			);
+			path = RendererBridge;
+			sourceTree = "<group>";
+		};
 		A00000000000000000000067 /* RealTimeQuoteTests */ = {
 			isa = PBXGroup;
 			children = (
 				A00000000000000000000112 /* CoinbaseTickerMessageTests.swift */,
 				A00000000000000000000114 /* OKXTickerEnvelopeTests.swift */,
 				A0000000000000000000014A /* AppDependenciesConfigTests.swift */,
+				A000000000000000000001B8 /* AVAssetRouteVideoFrameWriterTests.swift */,
+				A00000000000000000000172 /* DefaultTripRouteResolverTests.swift */,
+				A000000000000000000001BE /* FallbackRouteVideoExporterTests.swift */,
 				A00000000000000000000131 /* QuoteBoardPresentationStateTests.swift */,
 				A00000000000000000000141 /* RuntimeConfigLoaderTests.swift */,
+				A000000000000000000001A0 /* RoutePreviewBridgeTests.swift */,
+				A000000000000000000001B2 /* RealRouteVideoExporterTests.swift */,
+				A000000000000000000001A8 /* RouteVideoTimelineTests.swift */,
+				A00000000000000000000187 /* TripPlannerViewModelTests.swift */,
+				A00000000000000000000170 /* TripPlannerPresentationTests.swift */,
 				A00000000000000000000027 /* TradingPairTests.swift */,
 				A00000000000000000000033 /* QuoteEngineTests.swift */,
 			);
@@ -210,7 +332,12 @@
 				A00000000000000000000028 /* ExchangeID.swift */,
 				A00000000000000000000153 /* MarketDetailsSnapshot.swift */,
 				A00000000000000000000161 /* ReferenceStatsSnapshot.swift */,
+				A0000000000000000000016C /* ResolvedTripSegment.swift */,
+				A0000000000000000000019E /* RoutePreviewRendererEvent.swift */,
+				A0000000000000000000016E /* RoutePreviewState.swift */,
 				A00000000000000000000029 /* TradingPair.swift */,
+				A0000000000000000000016A /* TripSegmentInput.swift */,
+				A00000000000000000000168 /* TripTransportType.swift */,
 				A0000000000000000000002A /* ConnectionState.swift */,
 				A0000000000000000000002B /* QuoteSnapshot.swift */,
 			);
@@ -221,10 +348,23 @@
 			isa = PBXGroup;
 			children = (
 				A0000000000000000000002C /* AppSettingsStore.swift */,
+				A00000000000000000000188 /* Export */,
 				A0000000000000000000006B /* Exchanges */,
 				A00000000000000000000166 /* ReferenceData */,
+				A0000000000000000000017B /* Trip */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		A0000000000000000000017B /* Trip */ = {
+			isa = PBXGroup;
+			children = (
+				A00000000000000000000174 /* CityResolving.swift */,
+				A0000000000000000000017A /* DefaultTripRouteResolver.swift */,
+				A00000000000000000000176 /* StaticCityResolver.swift */,
+				A00000000000000000000178 /* TripRouteResolving.swift */,
+			);
+			path = Trip;
 			sourceTree = "<group>";
 		};
 		A00000000000000000000166 /* ReferenceData */ = {
@@ -234,6 +374,25 @@
 				A00000000000000000000163 /* ReferenceStatsLoading.swift */,
 			);
 			path = ReferenceData;
+			sourceTree = "<group>";
+		};
+		A00000000000000000000188 /* Export */ = {
+			isa = PBXGroup;
+			children = (
+				A000000000000000000001A6 /* RouteVideoExportConfiguration.swift */,
+				A000000000000000000001B6 /* AVAssetRouteVideoFrameWriter.swift */,
+				A000000000000000000001BC /* FallbackRouteVideoExporter.swift */,
+				A000000000000000000001BD /* FFmpegRouteVideoExporter.swift */,
+				A000000000000000000001B0 /* RealRouteVideoExporter.swift */,
+				A000000000000000000001AE /* RouteVideoFrameWriting.swift */,
+				A000000000000000000001A4 /* RouteVideoExportError.swift */,
+				A00000000000000000000183 /* RouteVideoExporting.swift */,
+				A000000000000000000001AC /* RouteVideoRendererHosting.swift */,
+				A000000000000000000001AA /* RouteVideoTimeline.swift */,
+				A00000000000000000000185 /* StubRouteVideoExporter.swift */,
+				A000000000000000000001B4 /* WebKitRouteVideoRendererHost.swift */,
+			);
+			path = Export;
 			sourceTree = "<group>";
 		};
 		A0000000000000000000006B /* Exchanges */ = {
@@ -273,6 +432,7 @@
 			isa = PBXGroup;
 			children = (
 				A0000000000000000000002D /* QuoteBoardViewModel.swift */,
+				A00000000000000000000181 /* TripPlannerViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -287,7 +447,7 @@
 		A00000000000000000000064 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A00000000000000000000022 /* RealTimeQuote.app */,
+				A00000000000000000000022 /* YCompanion.app */,
 				A00000000000000000000023 /* RealTimeQuoteTests.xctest */,
 			);
 			sourceTree = "<group>";
@@ -375,6 +535,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				A00000000000000000000150 /* Assets.xcassets in Resources */,
+				A000000000000000000001A1 /* route-preview.css in Resources */,
+				A00000000000000000000195 /* route-preview.html in Resources */,
+				A00000000000000000000197 /* route-preview.js in Resources */,
+				A000000000000000000001BF /* trip-location-dataset.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -414,15 +578,43 @@
 				A0000000000000000000001C /* QuoteBoardViewModel.swift in Sources */,
 				A0000000000000000000001A /* QuoteSnapshot.swift in Sources */,
 				A00000000000000000000038 /* QuoteEngine.swift in Sources */,
+				A0000000000000000000018F /* RendererStatusBadge.swift in Sources */,
 				A00000000000000000000162 /* ReferenceStatsLoading.swift in Sources */,
 				A00000000000000000000160 /* ReferenceStatsSnapshot.swift in Sources */,
 				A00000000000000000000011 /* RealTimeQuoteApp.swift in Sources */,
+				A0000000000000000000016B /* ResolvedTripSegment.swift in Sources */,
+				A0000000000000000000019D /* RoutePreviewRendererEvent.swift in Sources */,
+				A00000000000000000000193 /* RoutePreviewHTMLBuilder.swift in Sources */,
+				A0000000000000000000018D /* RoutePreviewPanel.swift in Sources */,
+				A00000000000000000000191 /* RoutePreviewWebView.swift in Sources */,
+				A000000000000000000001A5 /* RouteVideoExportConfiguration.swift in Sources */,
+				A000000000000000000001B5 /* AVAssetRouteVideoFrameWriter.swift in Sources */,
+				A000000000000000000001B9 /* FallbackRouteVideoExporter.swift in Sources */,
+				A000000000000000000001BA /* FFmpegRouteVideoExporter.swift in Sources */,
+				A000000000000000000001A3 /* RouteVideoExportError.swift in Sources */,
+				A00000000000000000000182 /* RouteVideoExporting.swift in Sources */,
+				A000000000000000000001AD /* RouteVideoFrameWriting.swift in Sources */,
+				A000000000000000000001AF /* RealRouteVideoExporter.swift in Sources */,
+				A000000000000000000001AB /* RouteVideoRendererHosting.swift in Sources */,
+				A000000000000000000001A9 /* RouteVideoTimeline.swift in Sources */,
+				A000000000000000000001B3 /* WebKitRouteVideoRendererHost.swift in Sources */,
+				A0000000000000000000016D /* RoutePreviewState.swift in Sources */,
 				A00000000000000000000147 /* RuntimeConfigLoader.swift in Sources */,
 				A00000000000000000000142 /* RuntimeConfig.swift in Sources */,
 				A00000000000000000000144 /* RuntimeConfigSource.swift in Sources */,
+				A00000000000000000000173 /* CityResolving.swift in Sources */,
+				A00000000000000000000179 /* DefaultTripRouteResolver.swift in Sources */,
+				A00000000000000000000175 /* StaticCityResolver.swift in Sources */,
 				A00000000000000000000126 /* StatsGridView.swift in Sources */,
+				A00000000000000000000184 /* StubRouteVideoExporter.swift in Sources */,
 				A00000000000000000000018 /* TradingPair.swift in Sources */,
+				A00000000000000000000169 /* TripSegmentInput.swift in Sources */,
+				A00000000000000000000189 /* TripPlannerView.swift in Sources */,
+				A0000000000000000000018B /* TripSegmentRowView.swift in Sources */,
+				A00000000000000000000180 /* TripPlannerViewModel.swift in Sources */,
+				A00000000000000000000177 /* TripRouteResolving.swift in Sources */,
 				A00000000000000000000122 /* TradingPairPickerView.swift in Sources */,
+				A00000000000000000000167 /* TripTransportType.swift in Sources */,
 				A00000000000000000000014 /* WindowStyler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -434,9 +626,17 @@
 				A00000000000000000000111 /* CoinbaseTickerMessageTests.swift in Sources */,
 				A00000000000000000000113 /* OKXTickerEnvelopeTests.swift in Sources */,
 				A00000000000000000000149 /* AppDependenciesConfigTests.swift in Sources */,
+				A000000000000000000001B7 /* AVAssetRouteVideoFrameWriterTests.swift in Sources */,
+				A0000000000000000000019F /* RoutePreviewBridgeTests.swift in Sources */,
+				A00000000000000000000171 /* DefaultTripRouteResolverTests.swift in Sources */,
+				A000000000000000000001BB /* FallbackRouteVideoExporterTests.swift in Sources */,
 				A00000000000000000000130 /* QuoteBoardPresentationStateTests.swift in Sources */,
+				A000000000000000000001B1 /* RealRouteVideoExporterTests.swift in Sources */,
 				A00000000000000000000140 /* RuntimeConfigLoaderTests.swift in Sources */,
 				A00000000000000000000032 /* QuoteEngineTests.swift in Sources */,
+				A0000000000000000000016F /* TripPlannerPresentationTests.swift in Sources */,
+				A000000000000000000001A7 /* RouteVideoTimelineTests.swift in Sources */,
+				A00000000000000000000186 /* TripPlannerViewModelTests.swift in Sources */,
 				A00000000000000000000016 /* TradingPairTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -459,24 +659,25 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CODE_SIGN_ENTITLEMENTS = RealTimeQuote/RealTimeQuote.entitlements;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_TESTABILITY = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "Real Time Quote";
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
+				INFOPLIST_KEY_CFBundleDisplayName = "Y Companion";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 1.0.3;
-				PRODUCT_BUNDLE_IDENTIFIER = com.tonyhuang.RealTimeQuote;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tonyhuang.YCompanion;
+				PRODUCT_MODULE_NAME = RealTimeQuote;
+				PRODUCT_NAME = YCompanion;
 				SDKROOT = macosx;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -490,22 +691,23 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CODE_SIGN_ENTITLEMENTS = RealTimeQuote/RealTimeQuote.entitlements;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "Real Time Quote";
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
+				INFOPLIST_KEY_CFBundleDisplayName = "Y Companion";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 1.0.3;
-				PRODUCT_BUNDLE_IDENTIFIER = com.tonyhuang.RealTimeQuote;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tonyhuang.YCompanion;
+				PRODUCT_MODULE_NAME = RealTimeQuote;
+				PRODUCT_NAME = YCompanion;
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_VERSION = 5.0;
@@ -527,12 +729,12 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.tonyhuang.RealTimeQuoteTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tonyhuang.YCompanionTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RealTimeQuote.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/RealTimeQuote";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/YCompanion.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/YCompanion";
 			};
 			name = Debug;
 		};
@@ -551,12 +753,12 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.tonyhuang.RealTimeQuoteTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tonyhuang.YCompanionTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RealTimeQuote.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/RealTimeQuote";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/YCompanion.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/YCompanion";
 			};
 			name = Release;
 		};

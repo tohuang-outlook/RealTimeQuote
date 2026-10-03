@@ -3,39 +3,23 @@ import XCTest
 
 final class TradingPairTests: XCTestCase {
     func testOKXInstrumentMappingUsesHyphenatedSpotSymbol() {
-        XCTAssertEqual(TradingPair.btcUSD.okxInstrumentID, "BTC-USDT")
-        XCTAssertEqual(TradingPair.ethUSD.okxInstrumentID, "ETH-USDT")
+        XCTAssertEqual(TradingPair.btcUSD.okxInstrumentID, "BTC-USD")
+        XCTAssertEqual(TradingPair.ethUSD.okxInstrumentID, "ETH-USD")
     }
 
     func testTradingPairUsesStablePersistenceAndDisplayIdentity() {
         XCTAssertEqual(TradingPair.btcUSD.id, "btc_usd")
         XCTAssertEqual(TradingPair.btcUSD.displaySymbol, "BTC-USD")
-        XCTAssertEqual(TradingPair.btcUSD.pickerLabel, "BTC")
         XCTAssertEqual(TradingPair.btcUSD.coinbaseProductID, "BTC-USD")
-        XCTAssertEqual(TradingPair.btcUSD.okxInstrumentID, "BTC-USDT")
+        XCTAssertEqual(TradingPair.btcUSD.okxInstrumentID, "BTC-USD")
     }
 
     func testXRPTradingPairUsesExchangeAndReferenceDataMappings() {
         XCTAssertEqual(TradingPair.xrpUSD.id, "xrp_usd")
         XCTAssertEqual(TradingPair.xrpUSD.displaySymbol, "XRP-USD")
-        XCTAssertEqual(TradingPair.xrpUSD.pickerLabel, "XRP")
         XCTAssertEqual(TradingPair.xrpUSD.coinbaseProductID, "XRP-USD")
-        XCTAssertEqual(TradingPair.xrpUSD.okxInstrumentID, "XRP-USDT")
+        XCTAssertEqual(TradingPair.xrpUSD.okxInstrumentID, "XRP-USD")
         XCTAssertEqual(TradingPair.xrpUSD.coinGeckoID, "ripple")
-    }
-
-    func testDOGETradingPairUsesExchangeAndReferenceDataMappings() {
-        XCTAssertEqual(TradingPair.dogeUSD.id, "doge_usd")
-        XCTAssertEqual(TradingPair.dogeUSD.displaySymbol, "DOGE-USD")
-        XCTAssertEqual(TradingPair.dogeUSD.pickerLabel, "DOGE")
-        XCTAssertEqual(TradingPair.dogeUSD.coinbaseProductID, "DOGE-USD")
-        XCTAssertEqual(TradingPair.dogeUSD.okxInstrumentID, "DOGE-USDT")
-        XCTAssertEqual(TradingPair.dogeUSD.coinGeckoID, "dogecoin")
-    }
-
-    func testDisplaySymbolUsesTheSelectedExchangeConvention() {
-        XCTAssertEqual(TradingPair.btcUSD.displaySymbol(for: .coinbase), "BTC-USD")
-        XCTAssertEqual(TradingPair.btcUSD.displaySymbol(for: .okx), "BTC-USDT")
     }
 
     func testTradingPairCodableUsesCanonicalPersistenceValue() throws {

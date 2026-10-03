@@ -7,3 +7,7 @@ DerivedData/
 .DS_Store
 Config/local.xcconfig
 Config/local.json
+Build/
+Release/
+.worktrees/
+.vscode/

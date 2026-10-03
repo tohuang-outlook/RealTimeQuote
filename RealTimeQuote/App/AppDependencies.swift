@@ -81,3 +81,41 @@ final class AppDependencies: ObservableObject {
         return AppDependencies(settingsStore: settingsStore, config: config)
     }
 }
+
+@MainActor
+extension AppDependencies {
+    func makeTripPlannerViewModel() -> TripPlannerViewModel {
+        let googleMapsAPIKey = config?.googleMaps?.apiKey
+        let googleMapsMapID = config?.googleMaps?.mapId
+        let rendererHostFactory: @MainActor ([ResolvedTripSegment], RouteVideoTimeline, RouteVideoExportConfiguration) -> RouteVideoRendererHosting = { segments, timeline, configuration in
+            WebKitRouteVideoRendererHost(
+                segments: segments,
+                timeline: timeline,
+                configuration: configuration,
+                googleMapsAPIKey: googleMapsAPIKey,
+                googleMapsMapID: googleMapsMapID
+            )
+        }
+
+        return TripPlannerViewModel(
+            routeResolver: DefaultTripRouteResolver(cityResolver: StaticCityResolver()),
+            exporter: FallbackRouteVideoExporter(
+                primary: RealRouteVideoExporter(
+                    rendererHostFactory: rendererHostFactory,
+                    frameWriterFactory: { timeline, configuration, outputURL in
+                        AVAssetRouteVideoFrameWriter(
+                            timeline: timeline,
+                            configuration: configuration,
+                            outputURL: outputURL
+                        )
+                    }
+                ),
+                fallback: FFmpegRouteVideoExporter(
+                    rendererHostFactory: rendererHostFactory
+                )
+            ),
+            googleMapsAPIKey: googleMapsAPIKey,
+            googleMapsMapID: googleMapsMapID
+        )
+    }
+}
